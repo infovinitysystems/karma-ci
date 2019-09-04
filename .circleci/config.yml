@@ -1,0 +1,55 @@
+version: 2
+jobs:
+  
+     
+  build:
+    docker:
+      - image: circleci/node:10.16.3
+      
+    steps:
+      - checkout
+      
+      - run:
+          name: Greeting from Infovinity Systems Pvt. Ltd.
+          command: echo Hello, from Prakash Khandelwal.
+          
+      - run:
+          name: Update NPM
+          command: 'sudo npm install yarn -g'
+          
+      - run:
+          name: Add dependancy
+          command: 'sudo yarn'
+          
+      - run:
+          name : App upload and Set app id in environment variable.
+          command : |
+            APP_UPLOAD_RESPONSE=$(curl -u "karmademo1:yavqKhpyfJ3KmeCHpswq" -X POST https://api-cloud.browserstack.com/app-automate/upload -F "file=@test/helpers/apps/karma-signed.apk")
+            echo "APP_UPLOAD_RESPONSE :  " + $APP_UPLOAD_RESPONSE
+            APP_ID=$(echo $APP_UPLOAD_RESPONSE | jq -r ".app_url")
+            if [ $APP_ID != null ]; then
+              echo "Apk uploaded to BrowserStack with app id : ",$APP_ID;
+              echo "export BROWSERSTACK_APP_ID=$APP_ID" >> $BASH_ENV;
+              source $BASH_ENV;
+              echo "Setting value of BROWSERSTACK_APP_ID in environment variables to  ",$APP_ID;
+            else
+              UPLOAD_ERROR_MESSAGE=$(echo $APP_UPLOAD_RESPONSE | jq -r ".error")
+              echo "App upload failed, reason : ",$UPLOAD_ERROR_MESSAGE
+              exit 1;
+            fi
+            
+      - run:
+          name : Download BrowserStack Local binary and start it.
+          command : |
+            # Download the browserstack binary file
+            wget "https://www.browserstack.com/browserstack-local/BrowserStackLocal-linux-x64.zip"
+            # Unzip it
+            unzip BrowserStackLocal-linux-x64.zip
+            # Run the file with user's access key
+            ./BrowserStackLocal --key yavqKhpyfJ3KmeCHpswq
+          background: true
+          
+      - run:
+          name: Running Test on Android 
+          command: 'sudo npm run test'
+      
