@@ -54,7 +54,7 @@ describe('TC_Auto_Reg_02 : Launch Karma APP & Make a successful Registration', f
 			const browserStackCaps = {
 			  'browserstack.user' : 'prakashkhandelwa4',
 			  'browserstack.key' : 'eswAGeNrz4JtEx3TtKNT',
-			  'build' : 'Karma [Android]-'+time,
+			  'build' : '[Android] Karma Register-'+time,
 			  'name': 'TC_Auto_Reg_02 : Launch Karma APP & Make a successful Registration',
 			  'device' : 'Google Nexus 6',
 			  'platformVersion' : '6.0',
@@ -190,13 +190,11 @@ describe('TC_Auto_Reg_02 : Launch Karma APP & Make a successful Registration', f
 		await nextBtn.click();
 		console.log("Clicked on next button.");
 		
-		await driver.setImplicitWaitTimeout(1000);
+		await driver.setImplicitWaitTimeout(2000);
 		
 		const personalDetails = await driver.elementByAccessibilityId("firstName-testId");
 		assert.equal(await personalDetails.isDisplayed(),true,"Successfully Personal Detail screen displayed.");
-	
-		
-		
+
 	});
 	
 	it('TC_Reg_33,TC_Reg_54 :  verify details on personal details screen.', async function () {	
@@ -381,7 +379,7 @@ describe('TC_Auto_Reg_03 : To verify Register page validations scenarios.', func
 			const browserStackCaps = {
 				'browserstack.user': 'prakashkhandelwa4',
 				'browserstack.key': 'eswAGeNrz4JtEx3TtKNT',
-				'build': 'Karma [Android]-' + time,
+				'build': '[Android] Karma Register-' + time,
 				'name': 'TC_Auto_Reg_03 : To verify Register page validations scenarios.',
 				'device': 'Google Nexus 6',
 				'platformVersion': '6.0',
@@ -431,13 +429,11 @@ describe('TC_Auto_Reg_03 : To verify Register page validations scenarios.', func
 
 		const mobileNo2 = await driver.elementByAccessibilityId('phone-testId');
 		await mobileNo2.sendKeys('998865');
-		console.log("Entered Mobile number : "+mobileNummber);
+		console.log("Entered Mobile number : ");
+
 		const mobileNoerror = await driver.elementByXPath("//android.widget.TextView[@text='Not a valid phone number.']");
-
-		let mobileNoerrormsg = mobileNoerror.text();
-
+		let mobileNoerrormsg = await mobileNoerror.text();
 		assert.equal(mobileNoerrormsg,moberroemsg,"validation message displayed successfully");
-
 	});
 
 	it('TC_Reg_13 : To verify validation message for less than 6 characters in password field.', async function () {
@@ -447,10 +443,8 @@ describe('TC_Auto_Reg_03 : To verify Register page validations scenarios.', func
 		console.log("Entered  Password");
 
 		const passworderror = await driver.elementByXPath("//android.widget.TextView[@text='Should be 6 characters or more']");
-		let actualpassworderrormsg = passworderror.text();
-
+		let actualpassworderrormsg = await passworderror.text();
 		assert.equal(actualpassworderrormsg,passerrormsg,"validation message displayed successfully");
-
 		await driver.quit();
 	});
 
