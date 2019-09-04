@@ -239,11 +239,13 @@ describe('TC_Reg_01 : Launch Karma APP & Make a successful Registration', functi
 	console.log("Entered Postal Code.");
 	
 	await driver.setImplicitWaitTimeout(1000);
+
 	const searchIcon = await driver.elementByAccessibilityId("searchIcon-testId");
 	await searchIcon.click();
 	console.log("Clicked on Search icon.");
 	
-	await driver.setImplicitWaitTimeout(1000);
+	await driver.setImplicitWaitTimeout(3000);
+
 	const selectAddress = await driver.elementByXPath("//android.widget.TextView[@text='Apartment 1.1, London, England']");
 	await selectAddress.click();
 	console.log("Address Selected.");
