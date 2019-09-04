@@ -235,6 +235,7 @@ describe('TC_Auto_Reg_02 : Launch Karma APP & Make a successful Registration', f
   
   
   it('TC_Reg_61,TC_Reg_62 should search icon functionality for valid postal code.', async function () {
+  	await driver.setImplicitWaitTimeout(1000);
 	const postalCode = await driver.elementByAccessibilityId("postalCode-testId");
 	await postalCode.sendKeys('SW10 0AA');
 	console.log("Entered Postal Code.");
@@ -251,7 +252,7 @@ describe('TC_Auto_Reg_02 : Launch Karma APP & Make a successful Registration', f
 	await selectAddress.click();
 	console.log("Address Selected.");
 	
-	await driver.setImplicitWaitTimeout(1000);
+	await driver.setImplicitWaitTimeout(2000);
 	const nextButton = await driver.elementByAccessibilityId("nextBtn-testId");
 	await nextButton.click();
 	console.log("Clicked on Next button.");
@@ -259,12 +260,12 @@ describe('TC_Auto_Reg_02 : Launch Karma APP & Make a successful Registration', f
 	 });
 	
 	it('TC_Reg_69 : verify "SIGN ME UP" button functionality from news and updates screen.', async function () {
-	await driver.setImplicitWaitTimeout(1000);
+	await driver.setImplicitWaitTimeout(3000);
 	const signMeUp = await driver.elementByAccessibilityId("signMeUpBtn-testId");
 	await signMeUp.click();
 	console.log("Clicked on Sign Me Up button.");
   
-	await driver.setImplicitWaitTimeout(1000);
+	await driver.setImplicitWaitTimeout(2000);
 	const allowButton = await driver.elementByAccessibilityId("allowBtn-testId");
 	const skipButton = await driver.elementByXPath("//android.widget.TextView[@text='skip']");
 	assert.equal(await allowButton.isDisplayed() && await skipButton.isDisplayed(),true,"Successfully allow and skip button displayed.");
@@ -272,6 +273,7 @@ describe('TC_Auto_Reg_02 : Launch Karma APP & Make a successful Registration', f
   });
   
   it('TC_Reg_72 : should "ALLOW" functionality from Your notifications screen.', async function () {
+  	await driver.setImplicitWaitTimeout(1000);
     const allowButton = await driver.elementByAccessibilityId("allowBtn-testId");
 	await allowButton.click();
 	console.log("Taped on allow button.");
@@ -279,6 +281,7 @@ describe('TC_Auto_Reg_02 : Launch Karma APP & Make a successful Registration', f
     
 	const step3and4Text = await driver.elementByXPath("//android.widget.TextView[@text='Step 3 of 4: Quick ID check']");
 	const takeaSelfie = await driver.elementByAccessibilityId("startPictureBtn-testId");
+	await driver.setImplicitWaitTimeout(1000);
 	assert.equal(await step3and4Text.isDisplayed() && await takeaSelfie.isDisplayed(),true,"Successfully step3and4 Text and takeaSelfie button displayed.");
 	
   });
