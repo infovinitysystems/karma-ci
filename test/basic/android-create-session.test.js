@@ -539,12 +539,12 @@ describe('TC_Auto_Reg_03 : To verify "Register" page and "Verification Code" scr
 
 		await driver.setImplicitWaitTimeout(1000);
 		const mobileNo = await driver.elementByAccessibilityId('phone-testId');
-		await mobileNo.sendKeys("7345823444");
-		console.log("Entered Mobile number : 7345823444");
+		await mobileNo.sendKeys("7345233440");
+		console.log("Entered Mobile number : 7345233440");
 
 		const password1 = await driver.elementByAccessibilityId('password-testId');
-		await password1.sendKeys('jhghhh6');
-		console.log("Entered Password : jhghhh6");
+		await password1.sendKeys('jh232hh6');
+		console.log("Entered Password : jh232hh6");
 
 		await driver.setImplicitWaitTimeout(1000);
 
