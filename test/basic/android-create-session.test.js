@@ -239,7 +239,7 @@ describe('TC_Auto_Reg_02 : Launch Karma APP & Make a successful Registration', f
 	});
 
     it('TC_Reg_61, TC_Reg_62 : To Verify search icon functionality for valid postal code.', async function () {
-  	await driver.setImplicitWaitTimeout(1000);
+  	await driver.setImplicitWaitTimeout(2000);
 	const postalCode = await driver.elementByAccessibilityId("postalCode-testId");
 	await postalCode.sendKeys('SW10 0AA');
 	console.log("Entered Postal Code.");
@@ -250,7 +250,7 @@ describe('TC_Auto_Reg_02 : Launch Karma APP & Make a successful Registration', f
 	await searchIcon.click();
 	console.log("Clicked on Search icon.");
 	
-	await driver.setImplicitWaitTimeout(3000);
+	await driver.setImplicitWaitTimeout(10000);
 
 	const selectAddress = await driver.elementByXPath("//android.widget.TextView[@text='Apartment 1.1, London, England']");
 	await selectAddress.click();
