@@ -11,12 +11,17 @@ let today = new Date();
 let time = today.getDate()+today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
 console.log("Build:-"+time);
 
+let bsUser = 'prakashkhandelwa4';
+let bsKey = 'eswAGeNrz4JtEx3TtKNT';
+let bsAppPath = 'bs://b8d7ccc4bc77ba8b89f4c9801f884659c865b89e';
+
 let mobileNummber = Math.floor(Math.random() * 9000000000) + 1000000000;
 let firstnamevar = 'testFName';
 let lastnamevar = 'testLName'
 let emailvar = 'test@yop.com'
-let moberroemsg ='Not a valid phone number.'
-let passerrormsg= 'Should be 6 characters or more'
+let expectedMobileErrormsg ='Not a valid phone number.'
+let expectedPassewordErrormsg= 'Should be 6 characters or more'
+let expectedotpErrormsg = 'Should be 6 characters or more'
 
 function isAlertPresent(driver){ 
 	try 
@@ -39,29 +44,29 @@ describe('TC_Auto_Reg_02 : Launch Karma APP & Make a successful Registration', f
 		allPassed = allPassed && (this.currentTest.state === 'passed');
 	});
   
-	it('TC_Reg_01 : should launch karma application successfully.', async function () {
+	it('TC_Reg_01 : To Verify launch karma application successfully.', async function () {
 		try {
 			
 			
 			driver = await wd.promiseChainRemote(serverConfig)
-		/*
-			await driver.init({
+		/*	await driver.init({
 				...androidCaps,        
 				app: androidTestApp,
 			});
-			*/
-			
+*/
 			const browserStackCaps = {
-			  'browserstack.user' : 'prakashkhandelwa4',
-			  'browserstack.key' : 'eswAGeNrz4JtEx3TtKNT',
+			  'browserstack.user' : bsUser,
+			  'browserstack.key' : bsKey,
 			  'build' : '[Android] Karma Register-'+time,
 			  'name': 'TC_Auto_Reg_02 : Launch Karma APP & Make a successful Registration',
-			  'device' : 'Google Nexus 6',
-			  'platformVersion' : '6.0',
-			  'app' : 'bs://b8d7ccc4bc77ba8b89f4c9801f884659c865b89e',
+			  'app' : bsAppPath,
 			  'autoGrantPermissions' : true,
 			  'browserstack.debug' : true,
-			  'unicodeKeyboard': true
+			  'unicodeKeyboard': true,
+			  'testobject_cache_device': true,
+				'deviceName': 'Google Nexus 6',
+				'os_version': '6.0',
+				'noReset': true
 			};
 			
 			driver = wd.promiseRemote('http://hub-cloud.browserstack.com/wd/hub');
@@ -84,8 +89,8 @@ describe('TC_Auto_Reg_02 : Launch Karma APP & Make a successful Registration', f
 		}
 	});
    
-	it('TC_Reg_02 : Verify "REGISTER" button functionality', async function () {	
-		await driver.setImplicitWaitTimeout(5000);
+	it('TC_Reg_02 : To Verify "REGISTER" button functionality', async function () {
+		await driver.setImplicitWaitTimeout(3000);
 	
 		const register = await driver.elementByAccessibilityId("registerBtn-testId");
 		await register.click();
@@ -98,7 +103,7 @@ describe('TC_Auto_Reg_02 : Launch Karma APP & Make a successful Registration', f
 		assert.equal(await mobileNo.isDisplayed()&& await pswd.isDisplayed() && await checkBox.isDisplayed(), true,"Successfully Redirected to Register page.");
 	});
 
-	it('TC_Reg_03 :  verify "LOGIN" button functionality on registration page.', async function () {	
+	it('TC_Reg_03 :  To Verify "LOGIN" button functionality on registration page.', async function () {
 		await driver.setImplicitWaitTimeout(5000);
 	
 		const loginButtonOnRegistrationPage = await driver.elementByXPath("//android.widget.TextView[@text='Login']");		
@@ -146,7 +151,7 @@ describe('TC_Auto_Reg_02 : Launch Karma APP & Make a successful Registration', f
 		
 	});*/
 
-	it('TC_Reg_23 :verify "Register" button functionality with valid details.', async function () {		
+	it('TC_Reg_23 : To Verify "Register" button functionality with valid details.', async function () {
 
 		await driver.setImplicitWaitTimeout(1000);
 		const mobileNo = await driver.elementByAccessibilityId('phone-testId');
@@ -167,7 +172,7 @@ describe('TC_Auto_Reg_02 : Launch Karma APP & Make a successful Registration', f
 	
 	});
 	
-	it('TC_Reg_24 : verify details shown on "Verification code" screen.', async function () {
+	it('TC_Reg_24 : To Verify details shown on "Verification code" screen.', async function () {
 			
 			await driver.setImplicitWaitTimeout(3000);
 			
@@ -179,7 +184,7 @@ describe('TC_Auto_Reg_02 : Launch Karma APP & Make a successful Registration', f
 		
 	});
 	
-	it('TC_Reg_28,TC_Reg_29, TC_Reg_32 : verify by adding 6 digit code.', async function () {		
+	it('TC_Reg_28, TC_Reg_29, TC_Reg_32 : To Verify by adding 6 digit code.', async function () {
 		
 		const otpField = await driver.elementByAccessibilityId("otp-testId");
 		await otpField.sendKeys('998877');
@@ -197,7 +202,7 @@ describe('TC_Auto_Reg_02 : Launch Karma APP & Make a successful Registration', f
 
 	});
 	
-	it('TC_Reg_33,TC_Reg_54 :  verify details on personal details screen.', async function () {	
+	it('TC_Reg_33, TC_Reg_54 : To Verify details on personal details screen.', async function () {
 	
 	const firstNameField =  await driver.elementByAccessibilityId("firstName-testId");
 	await firstNameField.sendKeys(firstnamevar);
@@ -232,9 +237,8 @@ describe('TC_Auto_Reg_02 : Launch Karma APP & Make a successful Registration', f
 	
 	
 	});
-  
-  
-  it('TC_Reg_61,TC_Reg_62 should search icon functionality for valid postal code.', async function () {
+
+    it('TC_Reg_61, TC_Reg_62 : To Verify search icon functionality for valid postal code.', async function () {
   	await driver.setImplicitWaitTimeout(1000);
 	const postalCode = await driver.elementByAccessibilityId("postalCode-testId");
 	await postalCode.sendKeys('SW10 0AA');
@@ -259,7 +263,7 @@ describe('TC_Auto_Reg_02 : Launch Karma APP & Make a successful Registration', f
 	
 	 });
 	
-	it('TC_Reg_69 : verify "SIGN ME UP" button functionality from news and updates screen.', async function () {
+	it('TC_Reg_69 : To  Verify "SIGN ME UP" button functionality from news and updates screen.', async function () {
 	await driver.setImplicitWaitTimeout(3000);
 	const signMeUp = await driver.elementByAccessibilityId("signMeUpBtn-testId");
 	await signMeUp.click();
@@ -272,7 +276,7 @@ describe('TC_Auto_Reg_02 : Launch Karma APP & Make a successful Registration', f
 	
   });
   
-  it('TC_Reg_72 : should "ALLOW" functionality from Your notifications screen.', async function () {
+    it('TC_Reg_72 : To Verify "ALLOW" functionality from Your notifications screen.', async function () {
   	await driver.setImplicitWaitTimeout(1000);
     const allowButton = await driver.elementByAccessibilityId("allowBtn-testId");
 	await allowButton.click();
@@ -286,7 +290,8 @@ describe('TC_Auto_Reg_02 : Launch Karma APP & Make a successful Registration', f
 	
   });
 
-  it('TC_Reg_74, TC_Reg_77 : Verify  TAKE A SELFIE button functionality from verify your identity screen.', async function () {
+    it('TC_Reg_74, TC_Reg_77 : To Verify TAKE A SELFIE button functionality from verify your identity screen.', async function () {
+  	await driver.setImplicitWaitTimeout(2000);
     const takeaSelfie = await driver.elementByAccessibilityId("startPictureBtn-testId");
 	await takeaSelfie.click();	
 	console.log("Taped on take selfie button.");
@@ -299,7 +304,7 @@ describe('TC_Auto_Reg_02 : Launch Karma APP & Make a successful Registration', f
   
   });
   
-   it('TC_Reg_78 : verify  DONE button functionality from finished screen.', async function () {
+    it('TC_Reg_78 : To Verify  DONE button functionality from finished screen.', async function () {
 	await driver.setImplicitWaitTimeout(5000);
 	const done = await driver.elementByAccessibilityId("doneBtn-testId");
 	await done.click();	
@@ -308,7 +313,7 @@ describe('TC_Auto_Reg_02 : Launch Karma APP & Make a successful Registration', f
 
    });
 
-   it('Verify apply screen.', async function () {
+    it('TC_Reg_78 : To Verify apply screen.', async function () {
 
 		const apply = await  driver.elementByAccessibilityId("Apply, tab, 1 of 5");
 	    const dashboard = await  driver.elementByAccessibilityId("Dashboard, tab, 2 of 5");
@@ -320,7 +325,7 @@ describe('TC_Auto_Reg_02 : Launch Karma APP & Make a successful Registration', f
         await driver.setImplicitWaitTimeout(2000);
    });
 
-	it('Verify user profile screen.', async function () {
+	it('TC_Reg_79 : To Verify user profile screen after successfully registration.', async function () {
 
 		 const profile = await  driver.elementByAccessibilityId("Profile, tab, 4 of 5");
 		 await profile.click();
@@ -358,7 +363,7 @@ describe('TC_Auto_Reg_02 : Launch Karma APP & Make a successful Registration', f
 
 });
 
-describe('TC_Auto_Reg_03 : To verify Register page validations scenarios.', function () {
+describe('TC_Auto_Reg_03 : To verify "Register" page and "Verification Code" screen validations scenarios.', function () {
 	let driver;
 	let allPassed = true;
 
@@ -367,29 +372,29 @@ describe('TC_Auto_Reg_03 : To verify Register page validations scenarios.', func
 		allPassed = allPassed && (this.currentTest.state === 'passed');
 	});
 
-	it('should launch karma application successfully.', async function () {
+	it('TC_Reg_01 : To Verify launch karma application successfully.', async function () {
 		try {
 
 
 			driver = await wd.promiseChainRemote(serverConfig)
-			/*
-                await driver.init({
+             /*   await driver.init({
                     ...androidCaps,
                     app: androidTestApp,
-                });
-                */
+                });*/
 
 			const browserStackCaps = {
-				'browserstack.user': 'prakashkhandelwa4',
-				'browserstack.key': 'eswAGeNrz4JtEx3TtKNT',
+				'browserstack.user': bsUser,
+				'browserstack.key': bsKey,
 				'build': '[Android] Karma Register-' + time,
 				'name': 'TC_Auto_Reg_03 : To verify Register page validations scenarios.',
-				'device': 'Google Nexus 6',
-				'platformVersion': '6.0',
-				'app': 'bs://b8d7ccc4bc77ba8b89f4c9801f884659c865b89e',
+				'app': bsAppPath,
 				'autoGrantPermissions': true,
 				'browserstack.debug': true,
-				'unicodeKeyboard': true
+				'unicodeKeyboard': true,
+				'testobject_cache_device': true,
+				'deviceName': 'Google Nexus 6',
+				'os_version': '6.0',
+				'noReset': true
 			};
 
 			driver = wd.promiseRemote('http://hub-cloud.browserstack.com/wd/hub');
@@ -412,7 +417,7 @@ describe('TC_Auto_Reg_03 : To verify Register page validations scenarios.', func
 		}
 	});
 
-	it('TC_Reg_02 : Verify "REGISTER" button functionality', async function () {
+	it('TC_Reg_02 : To Verify "REGISTER" button functionality.', async function () {
 		await driver.setImplicitWaitTimeout(5000);
 
 		const register = await driver.elementByAccessibilityId("registerBtn-testId");
@@ -429,25 +434,136 @@ describe('TC_Auto_Reg_03 : To verify Register page validations scenarios.', func
 	it('TC_Reg_11 : To verify validation message for less then 10 digit phone number.', async function () {
 
 		await driver.setImplicitWaitTimeout(1000);
+		const mobileNo = await driver.elementByAccessibilityId('phone-testId');
+		await mobileNo.sendKeys('998865');
+		console.log("Entered Mobile number ");
 
-		const mobileNo2 = await driver.elementByAccessibilityId('phone-testId');
-		await mobileNo2.sendKeys('998865');
-		console.log("Entered Mobile number : ");
+		const mobileNoError = await driver.elementByXPath("//android.widget.TextView[@text='Not a valid phone number.']");
+		let actualMobileErrormsg = await mobileNoError.text();
+		console.log(actualMobileErrormsg);
 
-		const mobileNoerror = await driver.elementByXPath("//android.widget.TextView[@text='Not a valid phone number.']");
-		let mobileNoerrormsg = await mobileNoerror.text();
-		assert.equal(mobileNoerrormsg,moberroemsg,"validation message displayed successfully");
+		assert.equal(actualMobileErrormsg,expectedMobileErrormsg,"validation message displayed successfully");
 	});
 
 	it('TC_Reg_13 : To verify validation message for less than 6 characters in password field.', async function () {
 
+		await driver.setImplicitWaitTimeout(1000);
 		const pswd = await driver.elementByAccessibilityId("password-testId");
 		await pswd.sendKeys('9ew5');
 		console.log("Entered  Password");
 
-		const passworderror = await driver.elementByXPath("//android.widget.TextView[@text='Should be 6 characters or more']");
-		let actualpassworderrormsg = await passworderror.text();
-		assert.equal(actualpassworderrormsg,passerrormsg,"validation message displayed successfully");
+		const passwordError = await driver.elementByXPath("//android.widget.TextView[@text='Should be 6 characters or more']");
+		let actualPasswordErrormsg = await passwordError.text();
+		console.log(actualPasswordErrormsg);
+
+		assert.equal(actualPasswordErrormsg,expectedPassewordErrormsg,"validation message displayed successfully");
+	});
+
+	it('TC_Reg_17 : To verify "I agree to the karma..." checkbox functionality with invalid phone number and password.', async function () {
+
+		await driver.setImplicitWaitTimeout(1000);
+		const mobileNo = await driver.elementByAccessibilityId('phone-testId');
+		await mobileNo.sendKeys('998865');
+		console.log("Entered invalid Mobile number: 998865");
+
+		await driver.setImplicitWaitTimeout(1000);
+		const pswd = await driver.elementByAccessibilityId("password-testId");
+		await pswd.sendKeys('9ew5');
+		console.log("Entered  Password: 9ew5");
+
+		const checkBox = await driver.elementByAccessibilityId("aggrementCheckbox-testId");
+		await checkBox.click();
+		console.log("Clicked on check box.");
+
+		const registerBtn = await driver.elementByAccessibilityId("registerBtn-testId");
+
+		assert.equal(await registerBtn.isEnabled(),true,"Register button is disable");
+
+	});
+
+	it('TC_Reg_19 : To verify "Terms of service" link from "I agree to the Karma." checkbox.', async function () {
+
+		const terms = await driver.elementByAccessibilityId("termsLink-testId");
+		await terms.click();
+		console.log("Tap on 'Terms of service' link.");
+		await driver.setImplicitWaitTimeout(5000);
+
+		const termsHeader = await driver.elementByAccessibilityId("headerTitle-testId");
+		let termsPageHeader = await termsHeader.text();
+
+		assert.equal(termsPageHeader,'TERMS OF SERVICE',"Pass. Verfied Terms of Service page");
+	});
+
+	it('TC_Reg_20 : To verify back button functionality from "Terms of service". ', async function () {
+
+		const goBack = await driver.elementByAccessibilityId("leftIconBtn-testId");
+		await goBack.click();
+		const mobileNo = await driver.elementByAccessibilityId('phone-testId');
+		const pswd = await driver.elementByAccessibilityId("password-testId");
+		//const checkBox = await driver.elementByAccessibilityId("aggrementCheckbox-testId");
+		console.log("Tap on Go Back icon.");
+		await driver.setImplicitWaitTimeout(1000);
+
+		assert.equal(await mobileNo.isDisplayed()&& await pswd.isDisplayed(), true,"Successfully Redirected to Register page.");
+
+	});
+
+	it('TC_Reg_21 : To verify "Privacy Policy" link from "I agree to the Karma..." checkbox.', async function () {
+
+		const privacy = await driver.elementByAccessibilityId("privacyPolicyLink-testId");
+		await privacy.click();
+		console.log("Tap on 'Privacy policy' link.");
+		await driver.setImplicitWaitTimeout(5000);
+
+		const privacyHeader = await driver.elementByAccessibilityId("headerTitle-testId");
+		let privacyPageHeader = await privacyHeader.text();
+
+		assert.equal(privacyPageHeader,'PRIVACY POLICY',"Pass. Verfied Privacy Policy page");
+	});
+
+	it('TC_Reg_22 : To verify back button functionality from "Privacy Policy".', async function () {
+
+		const goBack = await driver.elementByAccessibilityId("leftIconBtn-testId");
+		await goBack.click();
+		const mobileNo = await driver.elementByAccessibilityId('phone-testId');
+		const pswd = await driver.elementByAccessibilityId("password-testId");
+		const checkBox = await driver.elementByAccessibilityId("aggrementCheckbox-testId");
+		console.log("Tap on Go Back icon.");
+		await driver.setImplicitWaitTimeout(1000);
+
+		assert.equal(await mobileNo.isDisplayed()&& await pswd.isDisplayed() && await checkBox.isDisplayed(), true,"Successfully Redirected to Register page.");
+
+	});
+
+	it('TC_Reg_27 : To verify validation message for less then 6 digit code.', async function () {
+
+		await driver.setImplicitWaitTimeout(1000);
+		const mobileNo = await driver.elementByAccessibilityId('phone-testId');
+		await mobileNo.sendKeys("7345823444");
+		console.log("Entered Mobile number : 7345823444");
+
+		const password1 = await driver.elementByAccessibilityId('password-testId');
+		await password1.sendKeys('jhghhh6');
+		console.log("Entered Password : jhghhh6");
+
+		await driver.setImplicitWaitTimeout(1000);
+
+		const registerBtn = await driver.elementByAccessibilityId("registerBtn-testId");
+		await registerBtn.click();
+		console.log("Cliked on register Button.");
+
+		await driver.setImplicitWaitTimeout(3000);
+
+		const otp = await driver.elementByAccessibilityId("otp-testId");
+		await otp.sendKeys("3123");
+		console.log("Entered less than 6 digit OTP number: 3123");
+
+		const otpErrorMsg = await driver.elementByXPath("//android.widget.TextView[@text='Should be 6 characters or more']");
+		let actualotpErrorMsg = await otpErrorMsg.text();
+
+		console.log("Actual error message : "+actualotpErrorMsg);
+        assert.equal(actualotpErrorMsg,expectedotpErrormsg,"Error Message displayed Successfully");
+
 		await driver.quit();
 	});
 
