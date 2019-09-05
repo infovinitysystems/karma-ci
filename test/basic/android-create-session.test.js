@@ -196,7 +196,7 @@ describe('TC_Auto_Reg_02 : Launch Karma APP & Make a successful Registration', f
 		await nextBtn.click();
 		console.log("Clicked on next button.");
 		
-		await driver.setImplicitWaitTimeout(2000);
+		await driver.setImplicitWaitTimeout(5000);
 		
 		const personalDetails = await driver.elementByAccessibilityId("firstName-testId");
 		assert.equal(await personalDetails.isDisplayed(),true,"Successfully Personal Detail screen displayed.");
@@ -540,12 +540,12 @@ describe('TC_Auto_Reg_03 : To verify "Register" page and "Verification Code" scr
 
 		await driver.setImplicitWaitTimeout(1000);
 		const mobileNo = await driver.elementByAccessibilityId('phone-testId');
-		await mobileNo.sendKey(mobileNummber2);
+		await mobileNo.sendKeys(mobileNummber2);
 		console.log("Entered Mobile number : "+mobileNummber2);
 
 		const password1 = await driver.elementByAccessibilityId('password-testId');
-		await password1.sendKeys('abcd1234');
-		console.log("Entered Password : abcd1234 ");
+		await password1.sendKeys('abcd123456');
+		console.log("Entered Password : abcd123456 ");
 
 		await driver.setImplicitWaitTimeout(1000);
 
@@ -556,8 +556,8 @@ describe('TC_Auto_Reg_03 : To verify "Register" page and "Verification Code" scr
 		await driver.setImplicitWaitTimeout(3000);
 
 		const otp = await driver.elementByAccessibilityId("otp-testId");
-		await otp.sendKeys("3122");
-		console.log("Entered less than 6 digit OTP number: 3122");
+		await otp.sendKeys("3981");
+		console.log("Entered less than 6 digit OTP number: 3981");
 
 		const otpErrorMsg = await driver.elementByXPath("//android.widget.TextView[@text='Should be 6 characters or more']");
 		let actualotpErrorMsg = await otpErrorMsg.text();
