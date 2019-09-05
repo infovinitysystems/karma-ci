@@ -11,12 +11,12 @@ let today = new Date();
 let time = today.getDate()+today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
 console.log("Build:-"+time);
 
-let bsUser = 'prakashkhandelwa4';
-let bsKey = 'eswAGeNrz4JtEx3TtKNT';
-let bsAppPath = 'bs://b8d7ccc4bc77ba8b89f4c9801f884659c865b89e';
+let bsUser = 'prakashkhandelwa5';
+let bsKey = 'tcs58Ga5ZnjKxVHq4NEp';
+let bsAppPath = 'bs://5d2b448c0644c43232566ebe80c41f7a9a5060f5';
 
 let mobileNummber = Math.floor(Math.random() * 9000000000) + 1000000000;
-let mastermobileNummber = Math.floor(Math.random() * 9000000000) + 1000000000;
+let mobileNummber2 = Math.floor(Math.random() * 9000000000) + 1000000000;
 let firstnamevar = 'testFName';
 let lastnamevar = 'testLName'
 let emailvar = 'test@yop.com'
@@ -540,12 +540,12 @@ describe('TC_Auto_Reg_03 : To verify "Register" page and "Verification Code" scr
 
 		await driver.setImplicitWaitTimeout(1000);
 		const mobileNo = await driver.elementByAccessibilityId('phone-testId');
-		await mobileNo.sendKeys("7345233440");
-		console.log("Entered Mobile number : 7345233440");
+		await mobileNo.sendKey(mobileNummber2);
+		console.log("Entered Mobile number : "+mobileNummber2);
 
 		const password1 = await driver.elementByAccessibilityId('password-testId');
-		await password1.sendKeys('jh232hh6');
-		console.log("Entered Password : jh232hh6");
+		await password1.sendKeys('abcd1234');
+		console.log("Entered Password : abcd1234 ");
 
 		await driver.setImplicitWaitTimeout(1000);
 
@@ -556,8 +556,8 @@ describe('TC_Auto_Reg_03 : To verify "Register" page and "Verification Code" scr
 		await driver.setImplicitWaitTimeout(3000);
 
 		const otp = await driver.elementByAccessibilityId("otp-testId");
-		await otp.sendKeys("3121");
-		console.log("Entered less than 6 digit OTP number: 3123");
+		await otp.sendKeys("3122");
+		console.log("Entered less than 6 digit OTP number: 3122");
 
 		const otpErrorMsg = await driver.elementByXPath("//android.widget.TextView[@text='Should be 6 characters or more']");
 		let actualotpErrorMsg = await otpErrorMsg.text();
