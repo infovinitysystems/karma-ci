@@ -16,6 +16,7 @@ let bsKey = 'eswAGeNrz4JtEx3TtKNT';
 let bsAppPath = 'bs://b8d7ccc4bc77ba8b89f4c9801f884659c865b89e';
 
 let mobileNummber = Math.floor(Math.random() * 9000000000) + 1000000000;
+let mastermobileNummber = Math.floor(Math.random() * 9000000000) + 1000000000;
 let firstnamevar = 'testFName';
 let lastnamevar = 'testLName'
 let emailvar = 'test@yop.com'
@@ -555,7 +556,7 @@ describe('TC_Auto_Reg_03 : To verify "Register" page and "Verification Code" scr
 		await driver.setImplicitWaitTimeout(3000);
 
 		const otp = await driver.elementByAccessibilityId("otp-testId");
-		await otp.sendKeys("3123");
+		await otp.sendKeys("3121");
 		console.log("Entered less than 6 digit OTP number: 3123");
 
 		const otpErrorMsg = await driver.elementByXPath("//android.widget.TextView[@text='Should be 6 characters or more']");
