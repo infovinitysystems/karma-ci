@@ -634,9 +634,9 @@ describe('TC_Auto_Reg_03 : To verify "Register" page and "Verification Code" scr
 		const registerBtn = await driver.elementByAccessibilityId("registerBtn-testId");
 		await registerBtn.click();
 		console.log("Clicked on register Button.");
-		await driver.setImplicitWaitTimeout(2000);
 
-		await driver.setImplicitWaitTimeout(15000);
+
+		await driver.setImplicitWaitTimeout(20000);
 		const resendSMS = await driver.elementByAccessibilityId("resendCodeLink-testId");
 		//await resendSMS.waitForDisplayed(15000);
 		await resendSMS.click();
