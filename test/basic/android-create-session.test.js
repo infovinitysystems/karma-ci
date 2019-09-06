@@ -12,7 +12,7 @@ console.log("Build:-"+time);
 
 let bsUser = 'prakashkhandelwa5';
 let bsKey = 'tcs58Ga5ZnjKxVHq4NEp';
-let bsAppPath = 'bs://b8d7ccc4bc77ba8b89f4c9801f884659c865b89e';
+let bsAppPath = 'bs://5d2b448c0644c43232566ebe80c41f7a9a5060f5';
 
 let mobileNummber = Math.floor(Math.random() * 9000000000) + 1000000000;
 let mobileNummber2 = Math.floor(Math.random() * 9000000000) + 1000000000;
