@@ -318,8 +318,7 @@ describe(testName1, function () {
     const allowButton = await driver.elementByAccessibilityId("allowBtn-testId");
 	await allowButton.click();
 	console.log("Taped on allow button.");
-	await driver.setImplicitWaitTimeout(1000);
-    
+	await driver.setImplicitWaitTimeout(5000);
 	const step3and4Text = await driver.elementByXPath("//android.widget.TextView[@text='Step 3 of 4: Quick ID check']");
 	const takeaSelfie = await driver.elementByAccessibilityId("startPictureBtn-testId");
 	await driver.setImplicitWaitTimeout(1000);
