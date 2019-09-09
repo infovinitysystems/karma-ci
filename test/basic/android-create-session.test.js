@@ -14,19 +14,45 @@ let bsUser = 'prakashkhandelwa5';
 let bsKey = 'tcs58Ga5ZnjKxVHq4NEp';
 let bsAppPath = 'bs://5d2b448c0644c43232566ebe80c41f7a9a5060f5';
 
+/*let bsUser = 'hardik240';
+let bsKey = 'spozWJDKHNJJJUyTVzGb';
+let bsAppPath = 'bs://74e499e6ed18d34566d3396c7b1af879bc79ab87';*/
+
 let mobileNummber = Math.floor(Math.random() * 9000000000) + 1000000000;
 let mobileNummber2 = Math.floor(Math.random() * 9000000000) + 1000000000;
 let mobileNummber3 = Math.floor(Math.random() * 9000000000) + 1000000000;
 let mobileNummber4 = Math.floor(Math.random() * 9000000000) + 1000000000;
 let firstnamevar = 'testFName';
-let lastnamevar = 'testLName'
-let emailvar = 'test@yop.com'
-let expectedMobileErrormsg ='Not a valid phone number.'
-let expectedPassewordErrormsg= 'Should be 6 characters or more'
-let expectedotpErrormsg = 'Should be 6 characters or more'
-let expectedotpErrormsg1= 'GraphQL error: Verification Code does not match.'
-let expectedFirstNameErrorMsg = 'Should be 2 characters or more'
+let lastnamevar = 'testLName';
+let emailvar = 'test@yop.com';
+let expectedMobileErrormsg ='Not a valid phone number.';
+let expectedPasswordErrormsg = 'Should be 6 characters or more';
+let expectedotpErrormsg = 'Should be 6 characters or more';
+let expectedotpErrormsg1= 'GraphQL error: Verification Code does not match.';
+let expectedFirstNameErrorMsg = 'Should be 2 characters or more';
+let expectedFirstNameErrorMsg2 = 'Require only alphabetic characters';
+let expectedLastNameErrorMsg = 'Require only alphabetic characters';
+let expectedLastNameErrorMsg2 = 'Should be 2 characters or more';
+let testName1 = 'TC_Auto_Reg_01 and TC_Auto_Reg_02 : Launch Karma APP & Make a successful Registration';
+let testName2 = 'TC_Auto_Reg_03 : To verify "Register" page and "Verification Code" screen validations scenarios.';
+let testName3 = 'TC_Auto_Reg_04 : To verify "Personal Details" screen validation.';
 
+
+function bsSetting(testName) {
+	const  browserStackCaps = {
+		'browserstack.user': bsUser,
+		'browserstack.key': bsKey,
+		'build': '[Android] Karma Register-' + time,
+		'name': testName,
+		'device': 'Google Nexus 6',
+		'platformVersion': '6.0',
+		'app': bsAppPath,
+		'autoGrantPermissions': true,
+		'browserstack.debug': true,
+		'unicodeKeyboard': true
+	};
+	return browserStackCaps;
+}
 
 function isAlertPresent(driver){ 
 	try 
@@ -40,7 +66,7 @@ function isAlertPresent(driver){
 	}   // catch 
 }
 
-describe('TC_Auto_Reg_02 : Launch Karma APP & Make a successful Registration', function () {
+describe(testName1, function () {
 	let driver;
 	let allPassed = true;
 
@@ -59,7 +85,7 @@ describe('TC_Auto_Reg_02 : Launch Karma APP & Make a successful Registration', f
 				app: androidTestApp,
 			});
 */
-			const browserStackCaps = {
+		/*	const browserStackCaps = {
 			  'browserstack.user' : bsUser,
 			  'browserstack.key' : bsKey,
 			  'build' : '[Android] Karma Register-'+time,
@@ -72,10 +98,10 @@ describe('TC_Auto_Reg_02 : Launch Karma APP & Make a successful Registration', f
 				'deviceName': 'Google Nexus 6',
 				'os_version': '6.0',
 				'noReset': true
-			};
+			};*/
 			
 			driver = wd.promiseRemote('http://hub-cloud.browserstack.com/wd/hub');
-			await driver.init(browserStackCaps);			
+			await driver.init(bsSetting(testName1));
 			await driver.setImplicitWaitTimeout(10000);
 			
 	  
@@ -105,7 +131,7 @@ describe('TC_Auto_Reg_02 : Launch Karma APP & Make a successful Registration', f
 
 		const mobileNo = await driver.elementByAccessibilityId("phone-testId");
 		const pswd = await driver.elementByAccessibilityId("password-testId");
-		const checkBox = await driver.elementByAccessibilityId("aggrementCheckbox-testId")
+		const checkBox = await driver.elementByAccessibilityId("aggrementCheckbox-testId");
 		
 		assert.equal(await mobileNo.isDisplayed()&& await pswd.isDisplayed() && await checkBox.isDisplayed(), true,"Successfully Redirected to Register page.");
 	});
@@ -116,7 +142,6 @@ describe('TC_Auto_Reg_02 : Launch Karma APP & Make a successful Registration', f
 		const loginButtonOnRegistrationPage = await driver.elementByXPath("//android.widget.TextView[@text='Login']");		
 		assert.equal(await loginButtonOnRegistrationPage.isDisplayed(), true,"LOGIN button displayed Successfully.");
 	});
-
 
 	/*it('TC_Reg_04 : Verify default country flag/country code from phone number text field.', async function () {
 		
@@ -375,7 +400,7 @@ describe('TC_Auto_Reg_02 : Launch Karma APP & Make a successful Registration', f
 
 });
 
-describe('TC_Auto_Reg_03 : To verify "Register" page and "Verification Code" screen validations scenarios.', function () {
+describe(testName2, function () {
 	let driver;
 	let allPassed = true;
 
@@ -394,7 +419,7 @@ describe('TC_Auto_Reg_03 : To verify "Register" page and "Verification Code" scr
                     app: androidTestApp,
                 });*/
 
-			const browserStackCaps = {
+			/*const browserStackCaps = {
 				'browserstack.user': bsUser,
 				'browserstack.key': bsKey,
 				'build': '[Android] Karma Register-' + time,
@@ -407,10 +432,10 @@ describe('TC_Auto_Reg_03 : To verify "Register" page and "Verification Code" scr
 				'deviceName': 'Google Nexus 6',
 				'os_version': '6.0',
 				'noReset': true
-			};
+			};*/
 
 			driver = wd.promiseRemote('http://hub-cloud.browserstack.com/wd/hub');
-			await driver.init(browserStackCaps);
+			await driver.init(bsSetting(testName2));
 			await driver.setImplicitWaitTimeout(8000);
 
 
@@ -438,7 +463,7 @@ describe('TC_Auto_Reg_03 : To verify "Register" page and "Verification Code" scr
 
 		const mobileNo = await driver.elementByAccessibilityId("phone-testId");
 		const pswd = await driver.elementByAccessibilityId("password-testId");
-		const checkBox = await driver.elementByAccessibilityId("aggrementCheckbox-testId")
+		const checkBox = await driver.elementByAccessibilityId("aggrementCheckbox-testId");
 
 		assert.equal(await mobileNo.isDisplayed() && await pswd.isDisplayed() && await checkBox.isDisplayed(), true, "Successfully Redirected to Register page.");
 	});
@@ -468,7 +493,7 @@ describe('TC_Auto_Reg_03 : To verify "Register" page and "Verification Code" scr
 		let actualPasswordErrormsg = await passwordError.text();
 		console.log(actualPasswordErrormsg);
 
-		assert.equal(actualPasswordErrormsg,expectedPassewordErrormsg,"validation message displayed successfully");
+		assert.equal(actualPasswordErrormsg,expectedPasswordErrormsg,"validation message displayed successfully");
 	});
 
 	it('TC_Reg_17 : To verify "I agree to the karma..." checkbox functionality with invalid phone number and password.', async function () {
@@ -645,10 +670,9 @@ describe('TC_Auto_Reg_03 : To verify "Register" page and "Verification Code" scr
 		await driver.quit();
 	});
 
-
 });
 
-describe('TC_Auto_Reg_04 : To verify "Personal Details" screen validation.', function () {
+describe(testName3, function () {
 	let driver;
 	let allPassed = true;
 
@@ -664,7 +688,7 @@ describe('TC_Auto_Reg_04 : To verify "Personal Details" screen validation.', fun
 				app: androidTestApp,
 			});
 */
-			const browserStackCaps = {
+			/*const browserStackCaps = {
 			  'browserstack.user' : bsUser,
 			  'browserstack.key' : bsKey,
 			  'build' : '[Android] Karma Register-'+time,
@@ -678,9 +702,9 @@ describe('TC_Auto_Reg_04 : To verify "Personal Details" screen validation.', fun
 				'os_version': '6.0',
 				'noReset': true
 			};
-
+*/
 			driver = wd.promiseRemote('http://hub-cloud.browserstack.com/wd/hub');
-			await driver.init(browserStackCaps);
+			await driver.init(bsSetting(testName3));
 			await driver.setImplicitWaitTimeout(8000);
 
 
@@ -711,7 +735,7 @@ describe('TC_Auto_Reg_04 : To verify "Personal Details" screen validation.', fun
 
 		const mobileNo = await driver.elementByAccessibilityId("phone-testId");
 		const pswd = await driver.elementByAccessibilityId("password-testId");
-		const checkBox = await driver.elementByAccessibilityId("aggrementCheckbox-testId")
+		const checkBox = await driver.elementByAccessibilityId("aggrementCheckbox-testId");
 
 		assert.equal(await mobileNo.isDisplayed()&& await pswd.isDisplayed() && await checkBox.isDisplayed(), true,"Successfully Redirected to Register page.");
 	});
@@ -769,7 +793,7 @@ describe('TC_Auto_Reg_04 : To verify "Personal Details" screen validation.', fun
 
 	});*/
 
-	it('TC_Reg_36 : To verify validation message by entering only one alphabet in first name field..', async function () {
+	it('TC_Reg_36 : To verify validation message by entering only one alphabet in first name field.', async function () {
 
 			await driver.setImplicitWaitTimeout(1000);
 			const firstNameField =  await driver.elementByAccessibilityId("firstName-testId");
@@ -781,7 +805,65 @@ describe('TC_Auto_Reg_04 : To verify "Personal Details" screen validation.', fun
 		  	let actualFirstNameErrorMsg = await firstNameError.text();
 		  	console.log("Actual First Name Error Msg : "+actualFirstNameErrorMsg);
 
-			assert.equal(actualFirstNameErrorMsg,expectedFirstNameErrorMsg,"FirstName Error Msg Displayed Successfully.")
-			await driver.quit();
+			assert.equal(actualFirstNameErrorMsg,expectedFirstNameErrorMsg,"FirstName Error Msg Displayed Successfully.");
+
 	});
+
+	it('TC_Reg_35 : To verify validation message by entering number and special character in first name field.', async function () {
+
+			await driver.setImplicitWaitTimeout(1000);
+
+			const firstNameField =  await driver.elementByAccessibilityId("firstName-testId");
+			await firstNameField.clear();
+			await firstNameField.sendKeys("4@#");
+			console.log("Entered firstName : 4@#");
+		    await driver.setImplicitWaitTimeout(1000);
+
+			const firstNameError =  await driver.elementByXPath("//android.widget.TextView[@text='Require only alphabetic characters']");
+		  	let actualFirstNameErrorMsg = await firstNameError.text();
+		  	console.log("Actual First Name Error Msg : "+actualFirstNameErrorMsg);
+		  	assert.equal(actualFirstNameErrorMsg,expectedFirstNameErrorMsg2,"FirstName Error Msg Displayed Successfully.");
+		});
+
+	it('TC_Reg_38 : To verify by removing the added text from first name text field.', async function () {
+
+			await driver.setImplicitWaitTimeout(1000);
+			const firstNameField =  await driver.elementByAccessibilityId("firstName-testId");
+			await firstNameField.clear();
+			/*let actualFirstName= await firstNameField.text();
+			console.log("Actual First Name : "+actualFirstName)
+			assert.equal(actualFirstName,expectedFirstName,"Text removed from FirstName.");*/
+			console.log("Text removed from the first name field.");
+
+		});
+
+	it('TC_Reg_40 : To verify validation message by entering number and special character in Last name field.', async function () {
+
+			await driver.setImplicitWaitTimeout(1000);
+			const lastNameField =  await driver.elementByAccessibilityId("lastName-testId");
+			await lastNameField.sendKeys("5@&");
+			console.log("Entered lastName : 5@&");
+		    await driver.setImplicitWaitTimeout(1000);
+
+			const lastNameError =  await driver.elementByXPath("//android.widget.TextView[@text='Require only alphabetic characters']");
+		  	let actuallastNameErrorMsg = await lastNameError.text();
+		  	console.log("Actual First Name Error Msg : "+actuallastNameErrorMsg);
+			assert.equal(actuallastNameErrorMsg,expectedLastNameErrorMsg,"LastName Error Msg Displayed Successfully.");
+
+		});
+
+	it('TC_Reg_41 : To verify validation message by entering only one alphabet in last name field.', async function () {
+            await driver.setImplicitWaitTimeout(1000);
+			const lastNameField =  await driver.elementByAccessibilityId("lastName-testId");
+			await lastNameField.sendKeys("N");
+			console.log("Entered lastName : N");
+		    await driver.setImplicitWaitTimeout(1000);
+
+		  	const lastNameError =  await driver.elementByXPath("//android.widget.TextView[@text='Should be 2 characters or more']");
+		  	let actualLastNameErrorMsg = await lastNameError.text();
+		  	console.log("Actual Last Name Error Msg : "+actualLastNameErrorMsg);
+
+			assert.equal(actualLastNameErrorMsg,expectedLastNameErrorMsg2,"LastName Error Msg Displayed Successfully.");
+	        await driver.quit();
+    });
 });
