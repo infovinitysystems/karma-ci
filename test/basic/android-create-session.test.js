@@ -36,6 +36,7 @@ let expectedLastNameErrorMsg2 = 'Should be 2 characters or more';
 let testName1 = 'TC_Auto_Reg_01 and TC_Auto_Reg_02 : Launch Karma APP & Make a successful Registration';
 let testName2 = 'TC_Auto_Reg_03 : To verify "Register" page and "Verification Code" screen validations scenarios.';
 let testName3 = 'TC_Auto_Reg_04 : To verify "Personal Details" screen validation.';
+let expectedFirstName= 'First name';
 
 
 function bsSetting(testName) {
@@ -65,6 +66,7 @@ function isAlertPresent(driver){
 		return false; 
 	}   // catch 
 }
+
 
 describe(testName1, function () {
 	let driver;
@@ -829,9 +831,9 @@ describe(testName3, function () {
 			await driver.setImplicitWaitTimeout(1000);
 			const firstNameField =  await driver.elementByAccessibilityId("firstName-testId");
 			await firstNameField.clear();
-			/*let actualFirstName= await firstNameField.text();
-			console.log("Actual First Name : "+actualFirstName)
-			assert.equal(actualFirstName,expectedFirstName,"Text removed from FirstName.");*/
+			let actualFirstName= await firstNameField.text();
+			console.log("Actual First Name : "+actualFirstName);
+			assert.equal(actualFirstName,expectedFirstName,"Text removed from FirstName.");
 			console.log("Text removed from the first name field.");
 
 		});
@@ -863,6 +865,6 @@ describe(testName3, function () {
 		  	console.log("Actual Last Name Error Msg : "+actualLastNameErrorMsg);
 
 			assert.equal(actualLastNameErrorMsg,expectedLastNameErrorMsg2,"LastName Error Msg Displayed Successfully.");
-	        await driver.quit();
+		    await driver.quit();
     });
 });
