@@ -281,8 +281,8 @@ describe(testName1, function () {
     it('TC_Reg_61, TC_Reg_62 : To Verify search icon functionality for valid postal code.', async function () {
   	await driver.setImplicitWaitTimeout(2000);
 	const postalCode = await driver.elementByAccessibilityId("postalCode-testId");
-	await postalCode.sendKeys('SW10 0AA');
-	console.log("Entered Postal Code.");
+	await postalCode.sendKeys('SW10 0AB');
+	console.log("Entered Postal Code : SW10 0AB");
 	
 	await driver.setImplicitWaitTimeout(1000);
 
@@ -292,7 +292,7 @@ describe(testName1, function () {
 	
 	await driver.setImplicitWaitTimeout(10000);
 
-	const selectAddress = await driver.elementByXPath("//android.widget.TextView[@text='Apartment 1.1, London, England']");
+	const selectAddress = await driver.elementByXPath("//android.widget.TextView[@text='Chelsea Academy, London, England']");
 	await selectAddress.click();
 	console.log("Address Selected.");
 	
@@ -888,8 +888,9 @@ describe(testName3, function () {
 		});
 
 	it('TC_Reg_51 : To verify validation message for invalid format Email Id.', async function () {
-
-	    let inValidEmailadd1 = "tarpan";
+        let inValidEmailadd1 = "tarpan";
+	    let inValidEmailadd2 = "tarpan@gmail";
+	    let inValidEmailadd3 = "@gmail.com";
 	    let expectedEmailErrorMsg = 'Invalid email address';
 
 	        //  Invalid email address error message validation for - inValidEmailadd1
@@ -906,6 +907,69 @@ describe(testName3, function () {
 			assert.equal(actualEmailErrorMsg1,expectedEmailErrorMsg,"For invalid Email ID format error msg Displayed Successfully.");
 
 			await emailField.clear();
+
+			//  Invalid email address error message validation for - inValidEmailadd2
+            await driver.setImplicitWaitTimeout(1000);
+			await emailField.sendKeys(inValidEmailadd2);
+            console.log("Entered Email ID : "+inValidEmailadd2);
+            await driver.setImplicitWaitTimeout(1000);
+
+            const emailError2 = await driver.elementByXPath("//android.widget.TextView[@text='Invalid email address']");
+			let actualEmailErrorMsg2 = await emailError2.text();
+			console.log("Actual invalid Email Error Msg : "+actualEmailErrorMsg2);
+
+			assert.equal(actualEmailErrorMsg2,expectedEmailErrorMsg,"For invalid Email ID format error msg Displayed Successfully.");
+
+			await emailField.clear();
+
+            //  Invalid email address error message validation for - inValidEmailadd3
+
+            await driver.setImplicitWaitTimeout(1000);
+            await emailField.sendKeys(inValidEmailadd3);
+            console.log("Entered Email ID : "+inValidEmailadd3);
+            await driver.setImplicitWaitTimeout(1000);
+            const emailError3 = await driver.elementByXPath("//android.widget.TextView[@text='Invalid email address']");
+            let actualEmailErrorMsg3 = await emailError3.text();
+            console.log("Actual invalid Email Error Msg : "+actualEmailErrorMsg3);
+
+            assert.equal(actualEmailErrorMsg3,expectedEmailErrorMsg,"For invalid Email ID format error msg Displayed Successfully.");
+
+            await emailField.clear();
+
+		});
+
+	it('TC_Reg_52 : To verify by entering valid format Email Id.', async function () {
+
+	    await driver.setImplicitWaitTimeout(1000);
+	    const firstNameField =  await driver.elementByAccessibilityId("firstName-testId");
+	    await firstNameField.sendKeys(firstnamevar);
+	    console.log("Entered firstName : "+firstnamevar);
+
+	    await driver.setImplicitWaitTimeout(1000);
+	    const lastNameField= await driver.elementByAccessibilityId("lastName-testId");
+	    await lastNameField.sendKeys(lastnamevar);
+	    console.log("Entered lastName : "+lastnamevar);
+
+	    await driver.setImplicitWaitTimeout(1000);
+	    const dobField =  await driver.elementByAccessibilityId("birthDateContainer-testId");
+	    await dobField.click();
+	    console.log("Clicked on DOB text field.");
+
+	    await driver.setImplicitWaitTimeout(1000);
+	    const dobFieldOK = await driver.elementById("android:id/button1");
+	    await dobFieldOK.click();
+	    console.log("Clicked on DOB ok button.");
+
+	    await driver.setImplicitWaitTimeout(1000);
+	    const emailField = await driver.elementByAccessibilityId("emailId-testId");
+	    await emailField.sendKeys(emailvar);
+	    console.log("Entered EmailID : "+emailvar );
+
+	    await driver.setImplicitWaitTimeout(2000);
+	    const nextButton = await driver.elementByAccessibilityId("nextBtn-testId");
+
+	    assert.equal(await nextButton.isDisplayed(),true,"Next Button Displayed Successfully.");
+        await driver.quit();
 		});
 
 });
