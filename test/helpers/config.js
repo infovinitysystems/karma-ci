@@ -16,9 +16,14 @@ const iosCaps = {
 const androidCaps = {
 	platformName: 'Android',
 	automationName: 'UiAutomator2',
-	deviceName: process.env.ANDROID_DEVICE_NAME || DEFAULT_ANDROID_DEVICE_NAME,
-	platformVersion: process.env.ANDROID_PLATFORM_VERSION || DEFAULT_ANDROID_PLATFORM_VERSION,
-	app: undefined // Will be added in tests
+    appPackage : 'com.karmareactnativeapp',
+    appActivity : 'com.karmareactnativeapp.MainActivity',
+    appWaitDuration : 30000,
+    unicodeKeyboard : true,
+    autoGrantPermissions : true,
+	deviceName: 'Mi A2',
+	platformVersion: '8.1.0',
+	app: 'F:\\prakash\\test\\helpers\\apps\\karma-latest.apk'
 };
 
 const browserStackCaps = {
@@ -42,7 +47,7 @@ const serverConfig = {
 const LOCAL_ASSET_BASE = path.resolve(__dirname, 'apps');
 
 let iosTestApp = path.resolve(LOCAL_ASSET_BASE, 'TestApp.app.zip');
-let androidTestApp = path.resolve(LOCAL_ASSET_BASE, 'karma-signed.apk');
+let androidTestApp = path.resolve(LOCAL_ASSET_BASE, 'karma-latest.apk');
 
 export {
   iosTestApp, androidTestApp, 

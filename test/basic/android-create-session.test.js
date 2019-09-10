@@ -14,8 +14,8 @@ let bsUser = 'prakashkhandelwa6';
 let bsKey = 'h8NFqzPAWxcJFsqzinsH';
 let bsAppPath = 'bs://29476068361124444dd00659f76c74a38a2b8a17';
 
-/* For Local execution
-let bsUser = 'krushal1';
+// For Local execution
+/*let bsUser = 'krushal1';
 let bsKey = 'eeLRkS3UNh9L9PZAU4tL';
 let bsAppPath = 'bs://950a3c2e05d43dfb027ffd6300a2fca3de18e00b';*/
 
@@ -83,12 +83,11 @@ describe(testName1, function () {
 		try {
 			
 			
-			//driver = await wd.promiseChainRemote(serverConfig)
-		/*	await driver.init({
+		/*	driver = await wd.promiseChainRemote(serverConfig);
+			await driver.init({
 				...androidCaps,        
 				app: androidTestApp,
-			});
-*/
+			});*/
 		/*	const browserStackCaps = {
 			  'browserstack.user' : bsUser,
 			  'browserstack.key' : bsKey,
@@ -116,9 +115,6 @@ describe(testName1, function () {
 			
 			const registerBtn = await driver.elementByAccessibilityId("registerBtn-testId");
 			const btnLogin = await driver.elementByAccessibilityId("loginBtn-testId");
-
-           // const register = appSelectors.registerBtn;
-			// const login = appSelectors.btnLogin;
 			assert.equal(await registerBtn.isDisplayed() && await btnLogin.isDisplayed(), true,"Application launch successfully.");
 		} finally {
 			// Quit the session, no matter what happens
@@ -136,15 +132,15 @@ describe(testName1, function () {
 		const mobileNo = await driver.elementByAccessibilityId("phone-testId");
 		const pswd = await driver.elementByAccessibilityId("password-testId");
 		const checkBox = await driver.elementByAccessibilityId("aggrementCheckbox-testId");
-		
-		assert.equal(await mobileNo.isDisplayed()&& await pswd.isDisplayed() && await checkBox.isDisplayed(), true,"Successfully Redirected to Register page.");
+		const login = await driver.elementByXPath("//android.widget.TextView[@text='Login']");
+		assert.equal(await mobileNo.isDisplayed()&& await pswd.isDisplayed() && await checkBox.isDisplayed() && await login.isDisplayed() &&  await register.isDisplayed(), true,"Successfully Redirected to Register page.");
 	});
 
 	it('TC_Reg_03 : To Verify "LOGIN" button functionality on registration page.', async function () {
 		await driver.setImplicitWaitTimeout(1000);
-	
-		const loginButtonOnRegistrationPage = await driver.elementByXPath("//android.widget.TextView[@text='Login']");		
+		const loginButtonOnRegistrationPage = await driver.elementByXPath("//android.widget.TextView[@text='Login']");
 		assert.equal(await loginButtonOnRegistrationPage.isDisplayed(), true,"LOGIN button displayed Successfully.");
+
 	});
 
 	/*it('TC_Reg_04 : Verify default country flag/country code from phone number text field.', async function () {
@@ -195,8 +191,8 @@ describe(testName1, function () {
 		console.log("Entered Mobile number : "+mobileNummber);
 
 		await driver.setImplicitWaitTimeout(1000);
-		const password1 = await driver.elementByAccessibilityId('password-testId');
-		await password1.sendKeys('pk91india');
+		const password = await driver.elementByAccessibilityId('password-testId');
+		await password.sendKeys('pk91india');
 		console.log("Entered Password.");	
 
 		await driver.setImplicitWaitTimeout(1000);
@@ -208,18 +204,23 @@ describe(testName1, function () {
 		const registerBtn = await driver.elementByAccessibilityId("registerBtn-testId");
 		await registerBtn.click();
 		console.log("Clicked on register Button.");
+
+		await driver.setImplicitWaitTimeout(5000);
+
+		const otp = await driver.elementByAccessibilityId("otp-testId");
+		assert.equal(await otp.isDisplayed(),true,'Verification Code page displayed Successfully.');
 	
 	});
 	
 	it('TC_Reg_24 : To Verify details shown on "Verification code" screen.', async function () {
 			
-			await driver.setImplicitWaitTimeout(3000);
+	    await driver.setImplicitWaitTimeout(3000);
 			
-			const otp = await driver.elementByAccessibilityId("otp-testId");
-			const nextButton = await driver.elementByAccessibilityId("nextBtn-testId");
-			const countDownText = await driver.elementByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.widget.ScrollView/android.view.ViewGroup/android.widget.TextView[3]");
+	    const otp = await driver.elementByAccessibilityId("otp-testId");
+	    const nextButton = await driver.elementByAccessibilityId("nextBtn-testId");
+	    const countDownText = await driver.elementByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.widget.ScrollView/android.view.ViewGroup/android.widget.TextView[3]");
 			
-			assert.equal(await otp.isDisplayed() && await nextButton.isDisplayed() && await countDownText.isDisplayed(), true,'Successfully OTP page displayed.');	
+	    assert.equal(await otp.isDisplayed() && await nextButton.isDisplayed() && await countDownText.isDisplayed(), true,'Successfully OTP page displayed.');
 		
 	});
 	
@@ -228,9 +229,18 @@ describe(testName1, function () {
 		const otpField = await driver.elementByAccessibilityId("otp-testId");
 		await otpField.sendKeys('998877');
 		console.log("Entered OTP number.");
-		
+
+		await driver.setImplicitWaitTimeout(1000);
+
+		const tickMark = await driver.elementByXPath("//android.view.ViewGroup[@content-desc='otpContainer-testId']/android.widget.TextView");
+		assert.equal(await tickMark.isDisplayed(),true,"Tick Mark displayed Successfully.");
+
 		await driver.setImplicitWaitTimeout(2000);
 		const nextBtn = await driver.elementByAccessibilityId("nextBtn-testId");
+
+		assert.equal(await nextBtn.isDisplayed(),true,"Next Button displayed Successfully.");
+
+        await driver.setImplicitWaitTimeout(1000);
 		await nextBtn.click();
 		console.log("Clicked on next button.");
 		
@@ -274,8 +284,13 @@ describe(testName1, function () {
 	const nextButton = await driver.elementByAccessibilityId("nextBtn-testId");
 	await nextButton.click();
 	console.log("Clicked on Next button.");
-	await driver.setImplicitWaitTimeout(1000);
-	
+	await driver.setImplicitWaitTimeout(3000);
+
+	const postalCode = await driver.elementByAccessibilityId("postalCode-testId");
+	const addressDetailsText = await driver.elementByXPath("//android.widget.TextView[@text='Step 2 of 4: The address details']");
+	const postalCodeNextButton = await driver.elementByAccessibilityId("nextBtn-testId");
+
+	assert.equal(await postalCode.isDisplayed() && await  addressDetailsText.isDisplayed() && await postalCodeNextButton.isDisplayed(),true,"Postal Code and Address details text is displayed successfully." );
 	});
 
     it('TC_Reg_61, TC_Reg_62 : To Verify search icon functionality for valid postal code.', async function () {
@@ -321,9 +336,11 @@ describe(testName1, function () {
     const allowButton = await driver.elementByAccessibilityId("allowBtn-testId");
 	await allowButton.click();
 	console.log("Taped on allow button.");
+
 	await driver.setImplicitWaitTimeout(5000);
 	const step3and4Text = await driver.elementByXPath("//android.widget.TextView[@text='Step 3 of 4: Quick ID check']");
 	const takeaSelfie = await driver.elementByAccessibilityId("startPictureBtn-testId");
+
 	await driver.setImplicitWaitTimeout(1000);
 	assert.equal(await step3and4Text.isDisplayed() && await takeaSelfie.isDisplayed(),true,"Successfully step3and4 Text and takeaSelfie button displayed.");
 	
@@ -339,8 +356,11 @@ describe(testName1, function () {
 	const capture = await driver.elementByAccessibilityId("captureSelfie-testId");
 	await capture.click();	
 	console.log("Taped on Capture button.");
-	await driver.setImplicitWaitTimeout(4000);
-  
+
+	await driver.setImplicitWaitTimeout(10000);
+	const done = await driver.elementByAccessibilityId("doneBtn-testId");
+	assert.equal(await done.isDisplayed(),true,"Done Button displayed successfully." );
+
   });
   
     it('TC_Reg_78 : To Verify DONE button functionality from finished screen.', async function () {
@@ -770,6 +790,7 @@ describe(testName3, function () {
 
 	it('TC_Reg_28, TC_Reg_29, TC_Reg_32 : To Verify by adding 6 digit code.', async function () {
 
+	    await driver.setImplicitWaitTimeout(2000);
 		const otpField = await driver.elementByAccessibilityId("otp-testId");
 		await otpField.sendKeys('998877');
 		console.log("Entered OTP number.");
@@ -878,16 +899,17 @@ describe(testName3, function () {
 			await driver.setImplicitWaitTimeout(2000);
 			const lastNameField =  await driver.elementByAccessibilityId("lastName-testId");
 			await lastNameField.clear();
+
 			let actualLastName= await lastNameField.text();
 			console.log("Actual Last Name : "+actualLastName);
 
 			let expectedEmptyLastName ='Last name';
 
 			assert.equal(actualLastName,expectedEmptyLastName,"Text removed from Last Name field.");
-			console.log("Text removed from the Last Name field.");
+			console.log("Text removed from the Last Name field and verified.");
 		});
 
-	it('TC_Reg_51 : To verify validation message for invalid format Email Id.', async function () {
+	it('TC_Reg_51 : To verify validation message for invalid format Email Ids.', async function () {
         let inValidEmailadd1 = "tarpan";
 	    let inValidEmailadd2 = "tarpan@gmail";
 	    let inValidEmailadd3 = "@gmail.com";
@@ -905,6 +927,7 @@ describe(testName3, function () {
 			console.log("Actual invalid Email Error Msg : "+actualEmailErrorMsg1);
 
 			assert.equal(actualEmailErrorMsg1,expectedEmailErrorMsg,"For invalid Email ID format error msg Displayed Successfully.");
+            console.log("Verified Error message for entering Invalid Email address.");
 
 			await emailField.clear();
 
@@ -919,6 +942,7 @@ describe(testName3, function () {
 			console.log("Actual invalid Email Error Msg : "+actualEmailErrorMsg2);
 
 			assert.equal(actualEmailErrorMsg2,expectedEmailErrorMsg,"For invalid Email ID format error msg Displayed Successfully.");
+            console.log("Verified Error message for entering Invalid Email address.");
 
 			await emailField.clear();
 
@@ -933,14 +957,17 @@ describe(testName3, function () {
             console.log("Actual invalid Email Error Msg : "+actualEmailErrorMsg3);
 
             assert.equal(actualEmailErrorMsg3,expectedEmailErrorMsg,"For invalid Email ID format error msg Displayed Successfully.");
+            console.log("Verified Error message for entering Invalid Email address.");
 
             await emailField.clear();
 
 		});
 
-	it('TC_Reg_52 : To verify by entering valid format Email Id.', async function () {
+	it('TC_Reg_52 : To verify by entering valid format Email Id and other valid details.', async function () {
 
 	    await driver.setImplicitWaitTimeout(1000);
+	    console.log("Entering valid Personal details.....");
+
 	    const firstNameField =  await driver.elementByAccessibilityId("firstName-testId");
 	    await firstNameField.sendKeys(firstnamevar);
 	    console.log("Entered firstName : "+firstnamevar);
@@ -968,7 +995,19 @@ describe(testName3, function () {
 	    await driver.setImplicitWaitTimeout(2000);
 	    const nextButton = await driver.elementByAccessibilityId("nextBtn-testId");
 
-	    assert.equal(await nextButton.isDisplayed(),true,"Next Button Displayed Successfully.");
+	    assert.equal(await nextButton.isDisplayed(),true,"Next Enabled Displayed Successfully.");
+
+	    await nextButton.click();
+	    console.log("Clicked on 'Next' button after filled valid Personal Details.");
+
+	    await driver.setImplicitWaitTimeout(5000);
+	    const postalCode = await driver.elementByAccessibilityId("postalCode-testId");
+	    const addressDetailsText = await driver.elementByXPath("//android.widget.TextView[@text='Step 2 of 4: The address details']");
+	    const postalCodeNextButton = await driver.elementByAccessibilityId("nextBtn-testId");
+
+	    assert.equal(await postalCode.isDisplayed() && await  addressDetailsText.isDisplayed() && await postalCodeNextButton.isDisplayed(),true,"Postal Code and Address details text is displayed successfully." );
+        console.log("Verified Postal Code-Address screen successfully.");
+
         await driver.quit();
 		});
 
