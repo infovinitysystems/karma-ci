@@ -24,7 +24,7 @@ jobs:
       - run:
           name : App upload and Set app id in environment variable.
           command : |
-            APP_UPLOAD_RESPONSE=$(curl -u "prakashkhandelwa5:tcs58Ga5ZnjKxVHq4NEp" -X POST https://api-cloud.browserstack.com/app-automate/upload -F "file=@test/helpers/apps/karma-latest.apk")
+            APP_UPLOAD_RESPONSE=$(curl -u "prakashkhandelwa6:h8NFqzPAWxcJFsqzinsH" -X POST https://api-cloud.browserstack.com/app-automate/upload -F "file=@test/helpers/apps/karma-latest.apk")
             echo "APP_UPLOAD_RESPONSE :  " + $APP_UPLOAD_RESPONSE
             APP_ID=$(echo $APP_UPLOAD_RESPONSE | jq -r ".app_url")
             if [ $APP_ID != null ]; then
@@ -46,7 +46,7 @@ jobs:
             # Unzip it
             unzip BrowserStackLocal-linux-x64.zip
             # Run the file with user's access key
-            ./BrowserStackLocal --key tcs58Ga5ZnjKxVHq4NEp
+            ./BrowserStackLocal --key h8NFqzPAWxcJFsqzinsH
           background: true
           
       - run:

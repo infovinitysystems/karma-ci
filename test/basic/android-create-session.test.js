@@ -10,13 +10,14 @@ let today = new Date();
 let time = today.getDate()+today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
 console.log("Build:-"+time);
 
-/*let bsUser = 'prakashkhandelwa5';
-let bsKey = 'tcs58Ga5ZnjKxVHq4NEp';
-let bsAppPath = 'bs://5d2b448c0644c43232566ebe80c41f7a9a5060f5';*/
+let bsUser = 'prakashkhandelwa6';
+let bsKey = 'h8NFqzPAWxcJFsqzinsH';
+let bsAppPath = 'bs://29476068361124444dd00659f76c74a38a2b8a17';
 
+/* For Local execution
 let bsUser = 'krushal1';
 let bsKey = 'eeLRkS3UNh9L9PZAU4tL';
-let bsAppPath = 'bs://950a3c2e05d43dfb027ffd6300a2fca3de18e00b';
+let bsAppPath = 'bs://950a3c2e05d43dfb027ffd6300a2fca3de18e00b';*/
 
 let mobileNummber = Math.floor(Math.random() * 9000000000) + 1000000000;
 let mobileNummber2 = Math.floor(Math.random() * 9000000000) + 1000000000;
@@ -32,6 +33,8 @@ let expectedotpErrormsg1= 'GraphQL error: Verification Code does not match.';
 let expectedFirstNameErrorMsg = 'Should be 2 characters or more';
 let expectedFNLNErrorMsg = 'Require only alphabetic characters';
 let expectedLastNameErrorMsg2 = 'Should be 2 characters or more';
+
+//Test-Scenario Name
 let testName1 = 'TC_Auto_Reg_01 and TC_Auto_Reg_02 : Launch Karma APP & Make a successful Registration';
 let testName2 = 'TC_Auto_Reg_03 : To verify "Register" page and "Verification Code" screen validations scenarios.';
 let testName3 = 'TC_Auto_Reg_04 : To verify "Personal Details" screen validation.';
@@ -885,54 +888,24 @@ describe(testName3, function () {
 		});
 
 	it('TC_Reg_51 : To verify validation message for invalid format Email Id.', async function () {
-			await driver.setImplicitWaitTimeout(2000);
+
+	    let inValidEmailadd1 = "tarpan";
+	    let expectedEmailErrorMsg = 'Invalid email address';
+
+	        //  Invalid email address error message validation for - inValidEmailadd1
+	        await driver.setImplicitWaitTimeout(2000);
 			const emailField = await driver.elementByAccessibilityId("emailId-testId");
-			await emailField.sendKeys("kw@@,xc(com");
-            console.log("Entered Email ID : kw@@,xc(com");
-            await driver.setImplicitWaitTimeout(2000);
+			await emailField.sendKeys(inValidEmailadd1);
+            console.log("Entered Email ID : "+inValidEmailadd1);
+            await driver.setImplicitWaitTimeout(1000);
 
-			const emailError = await driver.elementByXPath("//android.widget.TextView[@text='Invalid email address']");
-			let actualEmailErrorMsg = await emailError.text();
-			console.log("Actual Email Error Msg : "+actualEmailErrorMsg);
+			const emailError1 = await driver.elementByXPath("//android.widget.TextView[@text='Invalid email address']");
+			let actualEmailErrorMsg1 = await emailError1.text();
+			console.log("Actual invalid Email Error Msg : "+actualEmailErrorMsg1);
 
-            let expectedEmailErrorMsg = 'Invalid email address';
+			assert.equal(actualEmailErrorMsg1,expectedEmailErrorMsg,"For invalid Email ID format error msg Displayed Successfully.");
 
-			assert.equal(actualEmailErrorMsg,expectedEmailErrorMsg,"For invalid Email ID format error msg Displayed Successfully.");
-            await emailField.clear();
-		});
-
-	it('TC_Reg_52 : To verify by entering valid format Email Id.', async function () {
-
-	    await driver.setImplicitWaitTimeout(1000);
-	    const firstNameField =  await driver.elementByAccessibilityId("firstName-testId");
-	    await firstNameField.sendKeys(firstnamevar);
-	    console.log("Entered firstName : "+firstnamevar);
-
-	    await driver.setImplicitWaitTimeout(1000);
-	    const lastNameField= await driver.elementByAccessibilityId("lastName-testId");
-	    await lastNameField.sendKeys(lastnamevar);
-	    console.log("Entered lastName : "+lastnamevar);
-
-	    await driver.setImplicitWaitTimeout(1000);
-	    const dobField =  await driver.elementByAccessibilityId("birthDateContainer-testId");
-	    await dobField.click();
-	    console.log("Clicked on DOB text field.");
-
-	    await driver.setImplicitWaitTimeout(1000);
-	    const dobFieldOK = await driver.elementById("android:id/button1");
-	    await dobFieldOK.click();
-	    console.log("Clicked on DOB ok button.");
-
-	    await driver.setImplicitWaitTimeout(1000);
-	    const emailField = await driver.elementByAccessibilityId("emailId-testId");
-	    await emailField.sendKeys(emailvar);
-	    console.log("Entered EmailID : "+emailvar );
-
-	    await driver.setImplicitWaitTimeout(2000);
-	    const nextButton = await driver.elementByAccessibilityId("nextBtn-testId");
-
-	    assert.equal(await nextButton.isDisplayed(),true,"Next Button Displayed Successfully.");
-        await driver.quit();
+			await emailField.clear();
 		});
 
 });
