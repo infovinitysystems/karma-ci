@@ -10,13 +10,13 @@ let today = new Date();
 let time = today.getDate()+today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
 console.log("Build:-"+time);
 
-let bsUser = 'prakashkhandelwa5';
+/*let bsUser = 'prakashkhandelwa5';
 let bsKey = 'tcs58Ga5ZnjKxVHq4NEp';
-let bsAppPath = 'bs://5d2b448c0644c43232566ebe80c41f7a9a5060f5';
+let bsAppPath = 'bs://5d2b448c0644c43232566ebe80c41f7a9a5060f5';*/
 
-/*let bsUser = 'hardik240';
-let bsKey = 'spozWJDKHNJJJUyTVzGb';
-let bsAppPath = 'bs://74e499e6ed18d34566d3396c7b1af879bc79ab87';*/
+let bsUser = 'krushal1';
+let bsKey = 'eeLRkS3UNh9L9PZAU4tL';
+let bsAppPath = 'bs://950a3c2e05d43dfb027ffd6300a2fca3de18e00b';
 
 let mobileNummber = Math.floor(Math.random() * 9000000000) + 1000000000;
 let mobileNummber2 = Math.floor(Math.random() * 9000000000) + 1000000000;
@@ -30,13 +30,12 @@ let expectedPasswordErrormsg = 'Should be 6 characters or more';
 let expectedotpErrormsg = 'Should be 6 characters or more';
 let expectedotpErrormsg1= 'GraphQL error: Verification Code does not match.';
 let expectedFirstNameErrorMsg = 'Should be 2 characters or more';
-let expectedFirstNameErrorMsg2 = 'Require only alphabetic characters';
-let expectedLastNameErrorMsg = 'Require only alphabetic characters';
+let expectedFNLNErrorMsg = 'Require only alphabetic characters';
 let expectedLastNameErrorMsg2 = 'Should be 2 characters or more';
 let testName1 = 'TC_Auto_Reg_01 and TC_Auto_Reg_02 : Launch Karma APP & Make a successful Registration';
 let testName2 = 'TC_Auto_Reg_03 : To verify "Register" page and "Verification Code" screen validations scenarios.';
 let testName3 = 'TC_Auto_Reg_04 : To verify "Personal Details" screen validation.';
-let expectedFirstName= 'First name';
+
 
 
 function bsSetting(testName) {
@@ -243,12 +242,12 @@ describe(testName1, function () {
 	
 	const firstNameField =  await driver.elementByAccessibilityId("firstName-testId");
 	await firstNameField.sendKeys(firstnamevar);
-	console.log("Entered firstName.");
+	console.log("Entered firstName : "+firstnamevar);
 	
 	await driver.setImplicitWaitTimeout(1000);
 	const lastNameField= await driver.elementByAccessibilityId("lastName-testId");
 	await lastNameField.sendKeys(lastnamevar);
-	console.log("Entered lastName.");
+	console.log("Entered lastName :"+lastnamevar);
 
 	await driver.setImplicitWaitTimeout(1000);
 	const dobField =  await driver.elementByAccessibilityId("birthDateContainer-testId");
@@ -263,7 +262,7 @@ describe(testName1, function () {
 	await driver.setImplicitWaitTimeout(1000);
 	const emailField = await driver.elementByAccessibilityId("emailId-testId");
 	await emailField.sendKeys(emailvar);
-	console.log("Entered EmailID.");
+	console.log("Entered EmailID : "+emailvar);
 	
 	await driver.setImplicitWaitTimeout(1000);
 	const backButton = await driver.elementByAccessibilityId("leftIconBtn-testId");	
@@ -273,7 +272,6 @@ describe(testName1, function () {
 	await nextButton.click();
 	console.log("Clicked on Next button.");
 	await driver.setImplicitWaitTimeout(1000);
-	
 	
 	});
 
@@ -823,18 +821,22 @@ describe(testName3, function () {
 			const firstNameError =  await driver.elementByXPath("//android.widget.TextView[@text='Require only alphabetic characters']");
 		  	let actualFirstNameErrorMsg = await firstNameError.text();
 		  	console.log("Actual First Name Error Msg : "+actualFirstNameErrorMsg);
-		  	assert.equal(actualFirstNameErrorMsg,expectedFirstNameErrorMsg2,"FirstName Error Msg Displayed Successfully.");
+
+		  	assert.equal(actualFirstNameErrorMsg,expectedFNLNErrorMsg,"Error Msg for special characters in first name field Displayed Successfully.");
 		});
 
-	it('TC_Reg_38 : To verify by removing the added text from first name text field.', async function () {
+	it('TC_Reg_38 : To verify by removing the added text from First Name text field.', async function () {
 
 			await driver.setImplicitWaitTimeout(1000);
 			const firstNameField =  await driver.elementByAccessibilityId("firstName-testId");
 			await firstNameField.clear();
 			let actualFirstName= await firstNameField.text();
 			console.log("Actual First Name : "+actualFirstName);
-			assert.equal(actualFirstName,expectedFirstName,"Text removed from FirstName.");
-			console.log("Text removed from the first name field.");
+
+			let expectedEmptyFirstName = 'First name';
+
+			assert.equal(actualFirstName,expectedEmptyFirstName,"Text removed from First Name field.");
+			console.log("Text removed from the First Name field.");
 
 		});
 
@@ -849,12 +851,13 @@ describe(testName3, function () {
 			const lastNameError =  await driver.elementByXPath("//android.widget.TextView[@text='Require only alphabetic characters']");
 		  	let actuallastNameErrorMsg = await lastNameError.text();
 		  	console.log("Actual First Name Error Msg : "+actuallastNameErrorMsg);
-			assert.equal(actuallastNameErrorMsg,expectedLastNameErrorMsg,"LastName Error Msg Displayed Successfully.");
+			assert.equal(actuallastNameErrorMsg,expectedFNLNErrorMsg,"Error Msg for special characters in last name field Displayed Successfully.");
 
 		});
 
-	it('TC_Reg_41 : To verify validation message by entering only one alphabet in last name field.', async function () {
-            await driver.setImplicitWaitTimeout(1000);
+	it('TC_Reg_41 : To verify validation message by entering only one alphabet in Last Name field.', async function () {
+
+	        await driver.setImplicitWaitTimeout(1000);
 			const lastNameField =  await driver.elementByAccessibilityId("lastName-testId");
 			await lastNameField.sendKeys("N");
 			console.log("Entered lastName : N");
@@ -865,6 +868,71 @@ describe(testName3, function () {
 		  	console.log("Actual Last Name Error Msg : "+actualLastNameErrorMsg);
 
 			assert.equal(actualLastNameErrorMsg,expectedLastNameErrorMsg2,"LastName Error Msg Displayed Successfully.");
-		    await driver.quit();
+
     });
+
+	it('TC_Reg_43 : To verify by removing the added text from Last Name text field.', async function () {
+			await driver.setImplicitWaitTimeout(2000);
+			const lastNameField =  await driver.elementByAccessibilityId("lastName-testId");
+			await lastNameField.clear();
+			let actualLastName= await lastNameField.text();
+			console.log("Actual Last Name : "+actualLastName);
+
+			let expectedEmptyLastName ='Last name';
+
+			assert.equal(actualLastName,expectedEmptyLastName,"Text removed from Last Name field.");
+			console.log("Text removed from the Last Name field.");
+		});
+
+	it('TC_Reg_51 : To verify validation message for invalid format Email Id.', async function () {
+			await driver.setImplicitWaitTimeout(2000);
+			const emailField = await driver.elementByAccessibilityId("emailId-testId");
+			await emailField.sendKeys("kw@@,xc(com");
+            console.log("Entered Email ID : kw@@,xc(com");
+            await driver.setImplicitWaitTimeout(2000);
+
+			const emailError = await driver.elementByXPath("//android.widget.TextView[@text='Invalid email address']");
+			let actualEmailErrorMsg = await emailError.text();
+			console.log("Actual Email Error Msg : "+actualEmailErrorMsg);
+
+            let expectedEmailErrorMsg = 'Invalid email address';
+
+			assert.equal(actualEmailErrorMsg,expectedEmailErrorMsg,"For invalid Email ID format error msg Displayed Successfully.");
+            await emailField.clear();
+		});
+
+	it('TC_Reg_52 : To verify by entering valid format Email Id.', async function () {
+
+	    await driver.setImplicitWaitTimeout(1000);
+	    const firstNameField =  await driver.elementByAccessibilityId("firstName-testId");
+	    await firstNameField.sendKeys(firstnamevar);
+	    console.log("Entered firstName : "+firstnamevar);
+
+	    await driver.setImplicitWaitTimeout(1000);
+	    const lastNameField= await driver.elementByAccessibilityId("lastName-testId");
+	    await lastNameField.sendKeys(lastnamevar);
+	    console.log("Entered lastName : "+lastnamevar);
+
+	    await driver.setImplicitWaitTimeout(1000);
+	    const dobField =  await driver.elementByAccessibilityId("birthDateContainer-testId");
+	    await dobField.click();
+	    console.log("Clicked on DOB text field.");
+
+	    await driver.setImplicitWaitTimeout(1000);
+	    const dobFieldOK = await driver.elementById("android:id/button1");
+	    await dobFieldOK.click();
+	    console.log("Clicked on DOB ok button.");
+
+	    await driver.setImplicitWaitTimeout(1000);
+	    const emailField = await driver.elementByAccessibilityId("emailId-testId");
+	    await emailField.sendKeys(emailvar);
+	    console.log("Entered EmailID : "+emailvar );
+
+	    await driver.setImplicitWaitTimeout(2000);
+	    const nextButton = await driver.elementByAccessibilityId("nextBtn-testId");
+
+	    assert.equal(await nextButton.isDisplayed(),true,"Next Button Displayed Successfully.");
+        await driver.quit();
+		});
+
 });
