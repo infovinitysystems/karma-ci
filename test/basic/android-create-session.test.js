@@ -7,6 +7,7 @@ import {
 const {assert} = chai;
 
 let today = new Date();
+let todayDate = new Date("03/25/2015");
 let time = today.getDate()+today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
 console.log("Build:-"+time);
 
@@ -23,6 +24,7 @@ let mobileNummber = Math.floor(Math.random() * 9000000000) + 1000000000;
 let mobileNummber2 = Math.floor(Math.random() * 9000000000) + 1000000000;
 let mobileNummber3 = Math.floor(Math.random() * 9000000000) + 1000000000;
 let mobileNummber4 = Math.floor(Math.random() * 9000000000) + 1000000000;
+let mobileNummber5 = Math.floor(Math.random() * 9000000000) + 1000000000;
 let firstnamevar = 'testFName';
 let lastnamevar = 'testLName';
 let emailvar = 'test@yop.com';
@@ -33,12 +35,13 @@ let expectedotpErrormsg1= 'GraphQL error: Verification Code does not match.';
 let expectedFirstNameErrorMsg = 'Should be 2 characters or more';
 let expectedFNLNErrorMsg = 'Require only alphabetic characters';
 let expectedLastNameErrorMsg2 = 'Should be 2 characters or more';
+let Dob;
 
 //Test-Scenario Name
 let testName1 = 'TC_Auto_Reg_01 and TC_Auto_Reg_02 : Launch Karma APP & Make a successful Registration';
 let testName2 = 'TC_Auto_Reg_03 : To verify "Register" page and "Verification Code" screen validations scenarios.';
 let testName3 = 'TC_Auto_Reg_04 : To verify "Personal Details" screen validation.';
-
+let testName4 = 'TC_Auto_Reg_05 : To verify "Address Details" screen validations.';
 
 
 function bsSetting(testName) {
@@ -1008,7 +1011,360 @@ describe(testName3, function () {
 	    assert.equal(await postalCode.isDisplayed() && await  addressDetailsText.isDisplayed() && await postalCodeNextButton.isDisplayed(),true,"Postal Code and Address details text is displayed successfully." );
         console.log("Verified Postal Code-Address screen successfully.");
 
-        await driver.quit();
+         await driver.quit();
+
 		});
+
+});
+
+describe(testName4, function () {
+    let driver;
+    let allPassed = true;
+
+    afterEach(function () {
+        // keep track of whether all the tests have passed, since mocha does not do this
+        allPassed = allPassed && (this.currentTest.state === 'passed');
+    });
+
+    it('TC_Reg_01 : To Verify launch karma application successfully.', async function () {
+		try {
+			//driver = await wd.promiseChainRemote(serverConfig)
+		/*	await driver.init({
+				...androidCaps,
+				app: androidTestApp,
+			});
+*/
+			/*const browserStackCaps = {
+			  'browserstack.user' : bsUser,
+			  'browserstack.key' : bsKey,
+			  'build' : '[Android] Karma Register-'+time,
+			  'name': 'TC_Auto_Reg_05 : To verify 'Address Details' screen validations.',
+			  'app' : bsAppPath,
+			  'autoGrantPermissions' : true,
+			  'browserstack.debug' : true,
+			  'unicodeKeyboard': true,
+			  'testobject_cache_device': true,
+				'deviceName': 'Google Nexus 6',
+				'os_version': '6.0',
+				'noReset': true
+			};
+*/
+			driver = wd.promiseRemote('http://hub-cloud.browserstack.com/wd/hub');
+			await driver.init(bsSetting(testName4));
+			await driver.setImplicitWaitTimeout(8000);
+
+
+			// Check that we're running the Karma app by checking package and activity
+			//const activity = await driver.getCurrentActivity();
+			//const pkg = await driver.getCurrentPackage();
+			//console.log(activity);
+
+			const registerBtn = await driver.elementByAccessibilityId("registerBtn-testId");
+			const btnLogin = await driver.elementByAccessibilityId("loginBtn-testId");
+
+			assert.equal(await registerBtn.isDisplayed() && await btnLogin.isDisplayed(), true,"Application launch successfully.");
+		} finally {
+			// Quit the session, no matter what happens
+
+		}
+	});
+
+    it('TC_Reg_02 : To Verify "REGISTER" button functionality', async function () {
+		await driver.setImplicitWaitTimeout(1000);
+
+		const register = await driver.elementByAccessibilityId("registerBtn-testId");
+		await register.click();
+		console.log("Clicked on 'Register' button.");
+		await driver.setImplicitWaitTimeout(2000);
+
+		const mobileNo = await driver.elementByAccessibilityId("phone-testId");
+		const pswd = await driver.elementByAccessibilityId("password-testId");
+		const checkBox = await driver.elementByAccessibilityId("aggrementCheckbox-testId");
+
+		assert.equal(await mobileNo.isDisplayed()&& await pswd.isDisplayed() && await checkBox.isDisplayed(), true,"Successfully Redirected to Register page.");
+	});
+
+	it('TC_Reg_23 : To Verify "Register" button functionality with valid details.', async function () {
+
+		await driver.setImplicitWaitTimeout(1000);
+		const mobileNo = await driver.elementByAccessibilityId('phone-testId');
+		await mobileNo.sendKeys(mobileNummber5);
+		console.log("Entered Mobile number : "+mobileNummber5);
+
+		await driver.setImplicitWaitTimeout(1000);
+		const password1 = await driver.elementByAccessibilityId('password-testId');
+		await password1.sendKeys('test5678');
+		console.log("Entered Password.");
+
+		await driver.setImplicitWaitTimeout(1000);
+		const checkBox = await driver.elementByAccessibilityId("aggrementCheckbox-testId");
+		await checkBox.click();
+		console.log("Checked licence-agreement checkbox.");
+
+		await driver.setImplicitWaitTimeout(1000);
+
+		const registerBtn = await driver.elementByAccessibilityId("registerBtn-testId");
+		await registerBtn.click();
+		console.log("Clicked on register Button.");
+
+		await driver.setImplicitWaitTimeout(4000);
+	});
+
+	it('TC_Reg_28, TC_Reg_29, TC_Reg_32 : To Verify by adding 6 digit code.', async function () {
+
+	    await driver.setImplicitWaitTimeout(2000);
+		const otpField = await driver.elementByAccessibilityId("otp-testId");
+		await otpField.sendKeys('998877');
+		console.log("Entered OTP number.");
+
+		await driver.setImplicitWaitTimeout(2000);
+		const nextBtn = await driver.elementByAccessibilityId("nextBtn-testId");
+		await nextBtn.click();
+		console.log("Clicked on next button.");
+
+		await driver.setImplicitWaitTimeout(5000);
+
+		const personalDetails = await driver.elementByAccessibilityId("firstName-testId");
+		assert.equal(await personalDetails.isDisplayed(),true,"Successfully Personal Detail screen displayed.");
+
+	});
+
+    it('TC_Reg_52 : To verify by entering valid format Email Id and other valid details.', async function () {
+
+	    await driver.setImplicitWaitTimeout(1000);
+	    console.log("Entering valid Personal details.....");
+
+	    const firstNameField =  await driver.elementByAccessibilityId("firstName-testId");
+	    await firstNameField.sendKeys(firstnamevar);
+	    console.log("Entered firstName : "+firstnamevar);
+
+	    await driver.setImplicitWaitTimeout(1000);
+	    const lastNameField= await driver.elementByAccessibilityId("lastName-testId");
+	    await lastNameField.sendKeys(lastnamevar);
+	    console.log("Entered lastName : "+lastnamevar);
+
+	    await driver.setImplicitWaitTimeout(1000);
+	    const dobField =  await driver.elementByAccessibilityId("birthDateContainer-testId");
+	    await dobField.click();
+	    console.log("Clicked on DOB text field.");
+
+	    await driver.setImplicitWaitTimeout(1000);
+	    const dobFieldOK = await driver.elementById("android:id/button1");
+	    await dobFieldOK.click();
+	    console.log("Clicked on DOB ok button.");
+
+	 /*   await driver.setImplicitWaitTimeout(1000);
+	    Dob = dobField.text();
+	    console.log("Entered DOB."+Dob);*/
+
+	    await driver.setImplicitWaitTimeout(1000);
+	    const emailField = await driver.elementByAccessibilityId("emailId-testId");
+	    await emailField.sendKeys(emailvar);
+	    console.log("Entered EmailID : "+emailvar );
+
+	    await driver.setImplicitWaitTimeout(2000);
+	    const nextButton = await driver.elementByAccessibilityId("nextBtn-testId");
+
+	    assert.equal(await nextButton.isDisplayed(),true,"Next Enabled Displayed Successfully.");
+
+	    await nextButton.click();
+	    console.log("Clicked on 'Next' button after filled valid Personal Details.");
+
+	    await driver.setImplicitWaitTimeout(5000);
+	    const postalCode = await driver.elementByAccessibilityId("postalCode-testId");
+	    const addressDetailsText = await driver.elementByXPath("//android.widget.TextView[@text='Step 2 of 4: The address details']");
+	    const postalCodeNextButton = await driver.elementByAccessibilityId("nextBtn-testId");
+
+	    assert.equal(await postalCode.isDisplayed() && await  addressDetailsText.isDisplayed() && await postalCodeNextButton.isDisplayed(),true,"Postal Code and Address details text is displayed successfully." );
+        console.log("Verified Postal Code-Address screen successfully.");
+
+		});
+
+    it('TC_Reg_55 : To verify Back button functionality from address details screen.', async function () {
+
+			await driver.setImplicitWaitTimeout(2000);
+			const backButton =  await driver.elementByAccessibilityId("leftIconBtn-testId");
+			await backButton.click();
+			console.log("Clicked on Back Button.");
+
+			await driver.setImplicitWaitTimeout(2000);
+			const nextButtonOnPersonalDetailsScreen = await driver.elementByAccessibilityId("nextBtn-testId");
+
+			await driver.setImplicitWaitTimeout(2000);
+			const firstNameField =  await driver.elementByAccessibilityId("firstName-testId");
+			let actualFirstNameValue = await firstNameField.text();
+			console.log("Actual First Name : " +actualFirstNameValue);
+
+			assert.equal(actualFirstNameValue,firstnamevar,"FistName value is same as expected value ");
+
+			await driver.setImplicitWaitTimeout(2000);
+			const lastNameField= await driver.elementByAccessibilityId("lastName-testId");
+			let actualLastNameValue = await lastNameField.text();
+			console.log("Actual Last Name : " +actualLastNameValue);
+
+			assert.equal(actualLastNameValue,lastnamevar,"LastName value is same as expected value ");
+
+            /*let date = today.getDate();
+            let month = today.getMonth()+1;
+            let year = today.getFullYear();
+            let completeDateDMY = date+"/"+month+"/"+year;
+
+			await driver.setImplicitWaitTimeout(2000);
+			const dobField =  await driver.elementByAccessibilityId("birthDateContainer-testId");
+			let actualdobValue = await dobField.text();
+			console.log("Actual DOB : " +actualdobValue);
+
+			assert.equal(actualdobValue,completeDateDMY,"Dob value is same as expected value ");*/
+
+			await driver.setImplicitWaitTimeout(2000);
+			const emailField = await driver.elementByAccessibilityId("emailId-testId");
+            let actualeEmailValue = await emailField.text();
+			console.log("Actual Email Id : " +actualeEmailValue);
+
+			assert.equal(actualeEmailValue,emailvar,"Email value is same as expected value ");
+
+			assert.equal(await nextButtonOnPersonalDetailsScreen.isDisplayed(),true,"User is redirected to personal details screen Successfully.");
+		});
+
+	it('TC_Reg_56 : To verify validation message by entering upto 4 character in Postal Code.', async function () {
+
+			await driver.setImplicitWaitTimeout(2000);
+			const nextButton = await driver.elementByAccessibilityId("nextBtn-testId");
+			await nextButton.click();
+			console.log("Clicked on Next Button.");
+
+			await driver.setImplicitWaitTimeout(4000);
+			const postalCode = await driver.elementByAccessibilityId("postalCode-testId");
+			await postalCode.sendKeys('SW10');
+			console.log("Entered Postal Code : SW10");
+
+			await driver.setImplicitWaitTimeout(2000);
+			let expectedpostalErrorMsg = 'Should be 5 characters or more';
+			const postalError = await driver.elementByXPath("//android.widget.TextView[@text='Should be 5 characters or more']");
+			let actualpostalErrorMsg = await postalError.text();
+
+			console.log("Actual Postal Code Error Msg : "+actualpostalErrorMsg);
+			assert.equal(actualpostalErrorMsg,expectedpostalErrorMsg,"Postal Code Error Msg Displayed Successfully by entering upto 4 character in Postal Code.");
+
+			await postalCode.clear();
+		});
+
+	it('TC_Reg_57 : To verify by entering 5 or more  character in postal code.', async function () {
+
+			await driver.setImplicitWaitTimeout(2000);
+			const postalCode = await driver.elementByAccessibilityId("postalCode-testId");
+			await postalCode.sendKeys('SW100AA');
+			console.log("Entered Postal Code : SW100AA");
+
+            let expectedPostalCodeMsg = 'Select the search icon to find the address';
+			const postalCodeMsg = await driver.elementByXPath("//android.widget.TextView[@text='Select the search icon to find the address']");
+            let actualPostalCodeMsg = await postalCodeMsg.text();
+            console.log("Actual Postal Code Message : " +actualPostalCodeMsg);
+            assert.equal(actualPostalCodeMsg,expectedPostalCodeMsg,"Postal Code Msg Displayed Successfully by entering 5 or more character in Postal Code.");
+
+			const searchIcon = await driver.elementByAccessibilityId("searchIcon-testId");
+			assert.equal(await searchIcon.isDisplayed(),true,"Search icon Displayed Successfully.");
+
+			await postalCode.clear();
+		});
+
+	it('TC_Reg_58 : To verify "Search" icon functionality with invalid postal code.', async function () {
+
+	        await driver.setImplicitWaitTimeout(2000);
+			const postalCode = await driver.elementByAccessibilityId("postalCode-testId");
+			await postalCode.sendKeys('SW1022');
+			console.log("Entered Postal Code : SW1022");
+
+			await driver.setImplicitWaitTimeout(2000);
+			const searchIcon = await driver.elementByAccessibilityId("searchIcon-testId");
+			await searchIcon.click();
+            console.log("Clicked on Search Icon.");
+			await driver.setImplicitWaitTimeout(8000);
+
+			//let expectedAddressListMsg ='NO ADDRESSES FOUND';
+			const actualAddressList = await driver.elementByXPath("//android.widget.TextView[@text='NO ADDRESSES FOUND']");
+			/*let actualAddressListMsg = actualAddressList.text();
+			console.log("Actual Address list Message : "+actualAddressListMsg);*/
+
+			assert.equal(await actualAddressList.isDisplayed(),true,"Address list message Displayed Successfully for invalid postal code.");
+		});
+
+	it('TC_Reg_59 : To verify back button functionality from "ADDRESS LIST" screen.', async function () {
+
+			await driver.setImplicitWaitTimeout(2000);
+			const backButton =  await driver.elementByAccessibilityId("leftIconBtn-testId");
+			await backButton.click();
+			console.log("Clicked on Back Button.");
+
+			await driver.setImplicitWaitTimeout(2000);
+			const postalCode = await driver.elementByAccessibilityId("postalCode-testId");
+			assert.equal(await postalCode.isDisplayed(), true,"User is redirected to AddressDetails Screen." )
+		});
+
+	it('TC_Reg_63 : To verify by editing the selected address.', async function () {
+
+            await driver.setImplicitWaitTimeout(2000);
+			const postalCode = await driver.elementByAccessibilityId("postalCode-testId");
+			await postalCode.sendKeys('SW100ab');
+			console.log("Entered Postal Code : SW100ab");
+
+			await driver.setImplicitWaitTimeout(2000);
+			const searchIcon = await driver.elementByAccessibilityId("searchIcon-testId");
+			await searchIcon.click();
+			console.log("Clicked on Search icon.");
+
+            await driver.setImplicitWaitTimeout(10000);
+
+            const selectAddress = await driver.elementByXPath("//android.widget.TextView[@text='Chelsea Academy, London, England']");
+            let selectedAddressText = await selectAddress.text();
+            console.log("Address." +selectedAddressText);
+
+            var str1 = selectedAddressText.split(',');
+            let expectedBuildingName = str1[0].trim();
+            let expectedCityName = str1[1].trim();
+            let expectedCountryName = str1[2].trim();
+
+            console.log("Building : "+expectedBuildingName);
+            console.log("City : "+expectedCityName);
+            console.log("Country :" +expectedCountryName);
+
+            await selectAddress.click();
+            console.log("Address Selected..........");
+
+            await driver.setImplicitWaitTimeout(3000);
+            const buildingField = await driver.elementByAccessibilityId("buildingLane-testId");
+            let actualBuildingName= await buildingField.text();
+            console.log("Actual Building Name."+actualBuildingName);
+            assert.equal(actualBuildingName,expectedBuildingName," Building Name is verified." );
+
+            await driver.setImplicitWaitTimeout(2000);
+            const cityField = await driver.elementByAccessibilityId("cityName-testId");
+            let actualCityName= await cityField.text();
+            console.log("Actual City Name."+actualCityName);
+            assert.equal(actualCityName,expectedCityName ," City Name is verified." );
+
+            await driver.setImplicitWaitTimeout(2000);
+            const countryField = await driver.elementByAccessibilityId("countryName-testId");
+            let actualCountryName= await countryField.text();
+            console.log("Actual Country Name."+actualCountryName);
+            assert.equal(actualCountryName,expectedCountryName ," Country Name is verified." );
+
+            await driver.setImplicitWaitTimeout(2000);
+            await buildingField.sendKeys("TestBuilding");
+            console.log("Entered Building Name : TestBuilding");
+            await driver.setImplicitWaitTimeout(2000);
+
+            await cityField.sendKeys("TestCity");
+            console.log("Entered City  Name : TestCity");
+            await driver.setImplicitWaitTimeout(2000);
+
+            await countryField.sendKeys("TestCountry");
+            console.log("Entered Country Name : TestCountry");
+            await driver.setImplicitWaitTimeout(2000);
+
+            await driver.quit();
+		});
+
+
 
 });
