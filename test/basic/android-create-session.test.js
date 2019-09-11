@@ -7,7 +7,6 @@ import {
 const {assert} = chai;
 
 let today = new Date();
-let todayDate = new Date("03/25/2015");
 let time = today.getDate()+today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
 console.log("Build:-"+time);
 
@@ -1400,6 +1399,12 @@ describe(testName4, function () {
             const signMeUp = await driver.elementByAccessibilityId("signMeUpBtn-testId");
 	        const skipButton = await driver.elementByXPath("//android.widget.TextView[@text='skip']");
 
+            let expectedHeaderTextOfNewsandUpdateScreen = "NEWS AND UPDATES";
+            const headerOfNewsandUpdateScreen = await driver.elementByAccessibilityId("headerTitle-testId");
+            let actualHeaderTextOfNewsandUpdateScreen = await headerOfNewsandUpdateScreen.text();
+            console.log("Actual Header text of News and Updates Screen :"+actualHeaderTextOfNewsandUpdateScreen);
+            assert.equal(actualHeaderTextOfNewsandUpdateScreen,expectedHeaderTextOfNewsandUpdateScreen,"Header Text is same as expected : News and Updates");
+
 	        assert.equal(await signMeUp.isDisplayed() && await skipButton.isDisplayed(),true,"User is redirected to News and Updates page successfully." );
 	        await driver.quit();
     });
@@ -1632,6 +1637,7 @@ describe(testName5, function () {
 
 	it('TC_Reg_67 : To verify back button functionality from "NEWS AND UPDATES" screen.', async function (){
 
+	        await driver.setImplicitWaitTimeout(2000);
             const backButtonOfNewsandUpdatesScreen = await driver.elementByAccessibilityId("leftIconBtn-testId");
             await backButtonOfNewsandUpdatesScreen.click();
             console.log("Clicked on Back button.");
@@ -1761,8 +1767,90 @@ describe(testName5, function () {
         const allowButtonOnNotificationScreen = await driver.elementByAccessibilityId("allowBtn-testId");
 
         assert.equal(await skipButtonOnNotificationScreen.isDisplayed () && await allowButtonOnNotificationScreen.isDisplayed(),true, 'User redirected to "YOUR NOTIFICATIONS" screen Successfully.');
-        await driver.quit();
 
     });
+
+	it('TC_Reg_74, TC_Reg_77 : To Verify TAKE A SELFIE button functionality from verify your identity screen.', async function () {
+
+	    await driver.setImplicitWaitTimeout(1000);
+	    const skipButtonOnNotificationScreen = await driver.elementByXPath("//android.widget.TextView[@text='skip']");
+	    await skipButtonOnNotificationScreen.click();
+	    console.log("Clicked on Skip Button of Your Notifications Screen.");
+
+	    await driver.setImplicitWaitTimeout(2000);
+        const takeaSelfie = await driver.elementByAccessibilityId("startPictureBtn-testId");
+        await takeaSelfie.click();
+        console.log("Taped on take selfie button.");
+        await driver.setImplicitWaitTimeout(1000);
+
+        const capture = await driver.elementByAccessibilityId("captureSelfie-testId");
+        await capture.click();
+        console.log("Taped on Capture button.");
+
+        await driver.setImplicitWaitTimeout(10000);
+
+        const done = await driver.elementByAccessibilityId("doneBtn-testId");
+        assert.equal(await done.isDisplayed(),true,"Done Button displayed successfully." );
+
+  });
+
+    it('TC_Reg_78 : To Verify DONE button functionality from finished screen.', async function () {
+
+        await driver.setImplicitWaitTimeout(5000);
+        const done = await driver.elementByAccessibilityId("doneBtn-testId");
+        await done.click();
+        console.log("Taped on Done button.");
+        await driver.setImplicitWaitTimeout(2000);
+
+   });
+
+    it('TC_Reg_78 : To Verify apply screen.', async function () {
+
+        await driver.setImplicitWaitTimeout(2000);
+		const apply = await  driver.elementByAccessibilityId("Apply, tab, 1 of 5");
+	    const dashboard = await  driver.elementByAccessibilityId("Dashboard, tab, 2 of 5");
+	    const cards = await  driver.elementByAccessibilityId("Cards, tab, 3 of 5");
+	    const profile = await  driver.elementByAccessibilityId("Profile, tab, 4 of 5");
+	    const more = await  driver.elementByAccessibilityId("More, tab, 5 of 5");
+		const sport = await driver.elementByXPath("//android.widget.TextView[@text='Sports']");
+
+        assert.equal(await apply.isDisplayed() && await dashboard.isDisplayed() && await cards.isDisplayed() && await profile.isDisplayed() && await more.isDisplayed() && await sport.isDisplayed() ,true,"all elements displayed successfully on apply screen.");
+        await driver.setImplicitWaitTimeout(2000);
+   });
+
+	it('TC_Reg_79 : To Verify user profile screen after successfully registration.', async function () {
+
+	    await driver.setImplicitWaitTimeout(2000);
+	    const profile = await  driver.elementByAccessibilityId("Profile, tab, 4 of 5");
+	    await profile.click();
+		await driver.setImplicitWaitTimeout(2000);
+
+		const firstname = await driver.elementByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup[1]/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup[3]/android.widget.EditText");
+		const lastname = await driver.elementByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup[1]/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup[4]/android.widget.EditText");
+		const email = await driver.elementByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup[1]/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup[6]/android.widget.EditText");
+		const mobile = await driver.elementByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup[1]/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup[7]/android.widget.EditText");
+
+		let fn = await firstname.text();
+		console.log("Actual First Name : "+fn);
+
+		let ln = await lastname.text();
+		console.log("Actual Last Name : "+ln);
+
+		let emailID = await email.text();
+		console.log("Actual Email ID : "+emailID);
+
+		let mobilNo = await mobile.text();
+		console.log("Actual Mobile : "+mobilNo);
+
+		let mob = '+44'+mobileNummber6;
+
+		assert.equal(fn,firstnamevar,"First Name Matched successfully");
+		assert.equal(ln,lastnamevar,"Last Name Matched successfully");
+		assert.equal(emailID,emailvar,"Email Id Matched successfully");
+		assert.equal(mobilNo,mob,"Mobile Number Matched successfully");
+
+		await driver.setImplicitWaitTimeout(2000);
+		await driver.quit();
+	});
 
 });
