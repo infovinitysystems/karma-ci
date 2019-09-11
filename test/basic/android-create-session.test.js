@@ -46,7 +46,7 @@ let testName1 = 'TC_Auto_Reg_01 and TC_Auto_Reg_02 : Launch Karma APP & Make a s
 let testName2 = 'TC_Auto_Reg_03 : To verify "Register" page and "Verification Code" screen validations scenarios.';
 let testName3 = 'TC_Auto_Reg_04 : To verify "Personal Details" screen validation.';
 let testName4 = 'TC_Auto_Reg_05 : To verify "Address Details" screen validations.';
-let testName5 = 'TC_Auto_Reg_06 : To verify Back icon and Skip functionality for News-Update, Notifications and Identity screens.'
+let testName5 = 'TC_Auto_Reg_06 : To verify Back Icon and Skip functionality for News-Update, Notifications and Identity screens.'
 
 
 function bsSetting(testName) {
@@ -1711,7 +1711,7 @@ describe(testName5, function () {
 
     });
 
-	it('TC_Reg_71 : To verify "skip" button functionality from Your notifications screen.', async function () {
+	it('TC_Reg_71 : To verify "skip" link functionality from Your notifications screen.', async function () {
 
 	     await driver.setImplicitWaitTimeout(2000);
 	     const skipButtonOnNewsandUpdates = await driver.elementByXPath("//android.widget.TextView[@text='skip']");
