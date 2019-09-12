@@ -10,14 +10,9 @@ let today = new Date();
 let time = today.getDate()+today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
 console.log("Build:-"+time);
 
-let bsUser = 'prakashkhandelwa6';
-let bsKey = 'h8NFqzPAWxcJFsqzinsH';
-let bsAppPath = 'bs://29476068361124444dd00659f76c74a38a2b8a17';
-
-// For Local execution
-/*let bsUser = 'rahulkhokawat1';
-let bsKey = 'F9GKcttxNsQznKRxQo2m';
-let bsAppPath = 'bs://fa95a0237144f591bd64dad24e40cbadf4ebfc33';*/
+let bsUser = 'prakashkhandelwa7';
+let bsKey = 'u6BpZrvJDH1fsZBQvJHC';
+let bsAppPath = 'bs://8598bd7e6243a0d3cfa181f01ba9accada525896';
 
 let mobileNummber = Math.floor(Math.random() * 9000000000) + 1000000000;
 let mobileNummber2 = Math.floor(Math.random() * 9000000000) + 1000000000;
@@ -82,55 +77,22 @@ describe(testName1, function () {
 	let allPassed = true;
 
 	afterEach(function () {
-		// keep track of whether all the tests have passed, since mocha does not do this
 		allPassed = allPassed && (this.currentTest.state === 'passed');
 	});
   
 	it('TC_Reg_01 : To Verify launch karma application successfully.', async function () {
-		try {
-			
-			
-		/*	driver = await wd.promiseChainRemote(serverConfig);
-			await driver.init({
-				...androidCaps,        
-				app: androidTestApp,
-			});*/
-		/*	const browserStackCaps = {
-			  'browserstack.user' : bsUser,
-			  'browserstack.key' : bsKey,
-			  'build' : '[Android] Karma Register-'+time,
-			  'name': 'TC_Auto_Reg_02 : Launch Karma APP & Make a successful Registration',
-			  'app' : bsAppPath,
-			  'autoGrantPermissions' : true,
-			  'browserstack.debug' : true,
-			  'unicodeKeyboard': true,
-			  'testobject_cache_device': true,
-				'deviceName': 'Google Nexus 6',
-				'os_version': '6.0',
-				'noReset': true
-			};*/
-			
+
 			driver = wd.promiseRemote('http://hub-cloud.browserstack.com/wd/hub');
 			await driver.init(bsSetting(testName1));
 			await driver.setImplicitWaitTimeout(10000);
-			
-	  
-			// Check that we're running the Karma app by checking package and activity
-			//const activity = await driver.getCurrentActivity();
-			//const pkg = await driver.getCurrentPackage();
-			//console.log(activity);
-			
 			const registerBtn = await driver.elementByAccessibilityId("registerBtn-testId");
 			const btnLogin = await driver.elementByAccessibilityId("loginBtn-testId");
 			assert.equal(await registerBtn.isDisplayed() && await btnLogin.isDisplayed(), true,"Application launch successfully.");
-		} finally {
-			// Quit the session, no matter what happens
-			// await driver.quit();
-		}
 	});
    
 	it('TC_Reg_02 : To Verify "REGISTER" button functionality', async function () {
-		await driver.setImplicitWaitTimeout(3000);
+
+	    await driver.setImplicitWaitTimeout(3000);
 	
 		const register = await driver.elementByAccessibilityId("registerBtn-testId");
 		await register.click();
@@ -144,51 +106,11 @@ describe(testName1, function () {
 	});
 
 	it('TC_Reg_03 : To Verify "LOGIN" button functionality on registration page.', async function () {
+
 		await driver.setImplicitWaitTimeout(1000);
 		const loginButtonOnRegistrationPage = await driver.elementByXPath("//android.widget.TextView[@text='Login']");
 		assert.equal(await loginButtonOnRegistrationPage.isDisplayed(), true,"LOGIN button displayed Successfully.");
-
 	});
-
-	/*it('TC_Reg_04 : Verify default country flag/country code from phone number text field.', async function () {
-		
-		const code = await driver.elementByXPath('//android.view.ViewGroup[@content-desc=\'phoneContainer-testId\']/android.view.ViewGroup/android.widget.TextView');
-		
-		const countryFlag = await driver.elementByAccessibilityId('phoneContainer-testId');
-
-		assert.equal(await code.isDisplayed() && await countryFlag.isDisplayed() , true,'Successfully country flag/country code from phone number text field displayed.');
-		
-	});
-
-	it('TC_Reg_05 : Verify country flag/country code from phone number text field.', async function () {
-		
-		const countryFlag = await driver.elementByXPath('//android.view.ViewGroup[@content-desc=\"phoneContainer-testId\"]/android.view.ViewGroup/android.widget.ImageView');
-		
-
-		assert.equal(await countryFlag.isDisplayed(), true,'Successfully displayed.');
-		
-	});
-
-	it('TC_Reg_06, TC_Reg_07, TC_Reg_08 : Verify search country functionality.', async function () {
-		
-		const countryFlag = await driver.elementByXPath('//android.view.ViewGroup[@content-desc=\"phoneContainer-testId\"]/android.view.ViewGroup/android.widget.ImageView');
-		await countryFlag.click();
-		console.log("Clicked on Country Flag.");
-		
-		const crossButton=  await driver.elementByXPath('/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup[1]/android.view.ViewGroup/android.widget.ImageView');
-		
-		assert.equal(await crossButton.isDisplayed(), true,'Successfully Cross Button displayed.');
-		
-		const searchYourCountry = await driver.elementByXPath('/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup[1]/android.widget.EditText');	
-		await searchYourCountry.sendKeys("United Kingdom");
-		console.log("Entered United Kingdom in serach field.");
-		
-		const countryUK = await driver.elementByXPath('//android.widget.TextView[@text=\'United Kingdom (+44)\']');
-		await countryUK.click();
-        console.log("Clicked on United Kingdom Country Option.");
-
-		
-	});*/
 
 	it('TC_Reg_23 : To Verify "Register" button functionality with valid details.', async function () {
 
@@ -228,7 +150,6 @@ describe(testName1, function () {
 	    const countDownText = await driver.elementByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.widget.ScrollView/android.view.ViewGroup/android.widget.TextView[3]");
 			
 	    assert.equal(await otp.isDisplayed() && await nextButton.isDisplayed() && await countDownText.isDisplayed(), true,'Successfully OTP page displayed.');
-		
 	});
 	
 	it('TC_Reg_28, TC_Reg_29, TC_Reg_32 : To Verify by adding 6 digit code.', async function () {
@@ -255,132 +176,135 @@ describe(testName1, function () {
 		
 		const personalDetails = await driver.elementByAccessibilityId("firstName-testId");
 		assert.equal(await personalDetails.isDisplayed(),true,"Successfully Personal Detail screen displayed.");
-
 	});
 	
 	it('TC_Reg_33, TC_Reg_54 : To Verify details on personal details screen.', async function () {
 	
-	const firstNameField =  await driver.elementByAccessibilityId("firstName-testId");
-	await firstNameField.sendKeys(firstnamevar);
-	console.log("Entered firstName : "+firstnamevar);
-	
-	await driver.setImplicitWaitTimeout(1000);
-	const lastNameField= await driver.elementByAccessibilityId("lastName-testId");
-	await lastNameField.sendKeys(lastnamevar);
-	console.log("Entered lastName :"+lastnamevar);
+        const firstNameField =  await driver.elementByAccessibilityId("firstName-testId");
+        await firstNameField.sendKeys(firstnamevar);
+        console.log("Entered firstName : "+firstnamevar);
 
-	await driver.setImplicitWaitTimeout(1000);
-	const dobField =  await driver.elementByAccessibilityId("birthDateContainer-testId");
-	await dobField.click();
-	console.log("Clicked on DOB text field.");
+        await driver.setImplicitWaitTimeout(1000);
+        const lastNameField= await driver.elementByAccessibilityId("lastName-testId");
+        await lastNameField.sendKeys(lastnamevar);
+        console.log("Entered lastName :"+lastnamevar);
 
-	await driver.setImplicitWaitTimeout(1000);
-	const dobFieldOK = await driver.elementById("android:id/button1");
-	await dobFieldOK.click();
-	console.log("Clicked on DOB ok button.");	
-	
-	await driver.setImplicitWaitTimeout(1000);
-	const emailField = await driver.elementByAccessibilityId("emailId-testId");
-	await emailField.sendKeys(emailvar);
-	console.log("Entered EmailID : "+emailvar);
-	
-	await driver.setImplicitWaitTimeout(1000);
-	const backButton = await driver.elementByAccessibilityId("leftIconBtn-testId");	
-	assert.equal(await backButton.isDisplayed(), true,"Successfully back button displayed.");
+        await driver.setImplicitWaitTimeout(1000);
+        const dobField =  await driver.elementByAccessibilityId("birthDateContainer-testId");
+        await dobField.click();
+        console.log("Clicked on DOB text field.");
 
-	const nextButton = await driver.elementByAccessibilityId("nextBtn-testId");
-	await nextButton.click();
-	console.log("Clicked on Next button.");
-	await driver.setImplicitWaitTimeout(3000);
+        await driver.setImplicitWaitTimeout(1000);
+        const dobFieldOK = await driver.elementById("android:id/button1");
+        await dobFieldOK.click();
+        console.log("Clicked on DOB ok button.");
 
-	const postalCode = await driver.elementByAccessibilityId("postalCode-testId");
-	const addressDetailsText = await driver.elementByXPath("//android.widget.TextView[@text='Step 2 of 4: The address details']");
-	const postalCodeNextButton = await driver.elementByAccessibilityId("nextBtn-testId");
+        await driver.setImplicitWaitTimeout(1000);
+        const emailField = await driver.elementByAccessibilityId("emailId-testId");
+        await emailField.sendKeys(emailvar);
+        console.log("Entered EmailID : "+emailvar);
 
-	assert.equal(await postalCode.isDisplayed() && await  addressDetailsText.isDisplayed() && await postalCodeNextButton.isDisplayed(),true,"Postal Code and Address details text is displayed successfully." );
+        await driver.setImplicitWaitTimeout(1000);
+        const backButton = await driver.elementByAccessibilityId("leftIconBtn-testId");
+        assert.equal(await backButton.isDisplayed(), true,"Successfully back button displayed.");
+
+        const nextButton = await driver.elementByAccessibilityId("nextBtn-testId");
+        await nextButton.click();
+        console.log("Clicked on Next button.");
+        await driver.setImplicitWaitTimeout(3000);
+
+        const postalCode = await driver.elementByAccessibilityId("postalCode-testId");
+        const addressDetailsText = await driver.elementByXPath("//android.widget.TextView[@text='Step 2 of 4: The address details']");
+        const postalCodeNextButton = await driver.elementByAccessibilityId("nextBtn-testId");
+
+        assert.equal(await postalCode.isDisplayed() && await  addressDetailsText.isDisplayed() && await postalCodeNextButton.isDisplayed(),true,"Postal Code and Address details text is displayed successfully." );
+        });
+
+	it('TC_Reg_61, TC_Reg_62 : To Verify search icon functionality for valid postal code.', async function () {
+
+        await driver.setImplicitWaitTimeout(2000);
+        const postalCode = await driver.elementByAccessibilityId("postalCode-testId");
+        await postalCode.sendKeys('SW10 0AB');
+        console.log("Entered Postal Code : SW10 0AB");
+
+        await driver.setImplicitWaitTimeout(1000);
+
+        const searchIcon = await driver.elementByAccessibilityId("searchIcon-testId");
+        await searchIcon.click();
+        console.log("Clicked on Search icon.");
+
+        await driver.setImplicitWaitTimeout(10000);
+
+        const selectAddress = await driver.elementByXPath("//android.widget.TextView[@text='Chelsea Academy, London, England']");
+        await selectAddress.click();
+        console.log("Address Selected.");
+
+        await driver.setImplicitWaitTimeout(2000);
+        const nextButton = await driver.elementByAccessibilityId("nextBtn-testId");
+        await nextButton.click();
+        console.log("Clicked on Next button.");
 	});
 
-    it('TC_Reg_61, TC_Reg_62 : To Verify search icon functionality for valid postal code.', async function () {
-  	await driver.setImplicitWaitTimeout(2000);
-	const postalCode = await driver.elementByAccessibilityId("postalCode-testId");
-	await postalCode.sendKeys('SW10 0AB');
-	console.log("Entered Postal Code : SW10 0AB");
-	
-	await driver.setImplicitWaitTimeout(1000);
-
-	const searchIcon = await driver.elementByAccessibilityId("searchIcon-testId");
-	await searchIcon.click();
-	console.log("Clicked on Search icon.");
-	
-	await driver.setImplicitWaitTimeout(10000);
-
-	const selectAddress = await driver.elementByXPath("//android.widget.TextView[@text='Chelsea Academy, London, England']");
-	await selectAddress.click();
-	console.log("Address Selected.");
-	
-	await driver.setImplicitWaitTimeout(2000);
-	const nextButton = await driver.elementByAccessibilityId("nextBtn-testId");
-	await nextButton.click();
-	console.log("Clicked on Next button.");
-	
-	 });
-	
 	it('TC_Reg_69 : To Verify "SIGN ME UP" button functionality from news and updates screen.', async function () {
-	await driver.setImplicitWaitTimeout(3000);
-	const signMeUp = await driver.elementByAccessibilityId("signMeUpBtn-testId");
-	await signMeUp.click();
-	console.log("Clicked on Sign Me Up button.");
-  
-	await driver.setImplicitWaitTimeout(2000);
-	const allowButton = await driver.elementByAccessibilityId("allowBtn-testId");
-	const skipButton = await driver.elementByXPath("//android.widget.TextView[@text='skip']");
-	assert.equal(await allowButton.isDisplayed() && await skipButton.isDisplayed(),true,"Successfully allow and skip button displayed.");
-	
+
+        await driver.setImplicitWaitTimeout(3000);
+        const signMeUp = await driver.elementByAccessibilityId("signMeUpBtn-testId");
+        await signMeUp.click();
+        console.log("Clicked on Sign Me Up button.");
+
+        await driver.setImplicitWaitTimeout(2000);
+        const allowButton = await driver.elementByAccessibilityId("allowBtn-testId");
+        const skipButton = await driver.elementByXPath("//android.widget.TextView[@text='skip']");
+        assert.equal(await allowButton.isDisplayed() && await skipButton.isDisplayed(),true,"Successfully allow and skip button displayed.");
+
   });
   
     it('TC_Reg_72 : To Verify "ALLOW" functionality from Your notifications screen.', async function () {
-  	await driver.setImplicitWaitTimeout(1000);
-    const allowButton = await driver.elementByAccessibilityId("allowBtn-testId");
-	await allowButton.click();
-	console.log("Taped on allow button.");
 
-	await driver.setImplicitWaitTimeout(5000);
-	const step3and4Text = await driver.elementByXPath("//android.widget.TextView[@text='Step 3 of 4: Quick ID check']");
-	const takeaSelfie = await driver.elementByAccessibilityId("startPictureBtn-testId");
+        await driver.setImplicitWaitTimeout(1000);
+        const allowButton = await driver.elementByAccessibilityId("allowBtn-testId");
+        await allowButton.click();
+        console.log("Taped on allow button.");
 
-	await driver.setImplicitWaitTimeout(1000);
-	assert.equal(await step3and4Text.isDisplayed() && await takeaSelfie.isDisplayed(),true,"Successfully step3and4 Text and takeaSelfie button displayed.");
-	
+        await driver.setImplicitWaitTimeout(5000);
+        const step3and4Text = await driver.elementByXPath("//android.widget.TextView[@text='Step 3 of 4: Quick ID check']");
+        const takeaSelfie = await driver.elementByAccessibilityId("startPictureBtn-testId");
+
+        await driver.setImplicitWaitTimeout(1000);
+        assert.equal(await step3and4Text.isDisplayed() && await takeaSelfie.isDisplayed(),true,"Successfully step3and4 Text and takeaSelfie button displayed.");
+
   });
 
     it('TC_Reg_74, TC_Reg_77 : To Verify TAKE A SELFIE button functionality from verify your identity screen.', async function () {
-  	await driver.setImplicitWaitTimeout(2000);
-    const takeaSelfie = await driver.elementByAccessibilityId("startPictureBtn-testId");
-	await takeaSelfie.click();	
-	console.log("Taped on take selfie button.");
-	await driver.setImplicitWaitTimeout(1000);
-	
-	const capture = await driver.elementByAccessibilityId("captureSelfie-testId");
-	await capture.click();	
-	console.log("Taped on Capture button.");
 
-	await driver.setImplicitWaitTimeout(10000);
-	const done = await driver.elementByAccessibilityId("doneBtn-testId");
-	assert.equal(await done.isDisplayed(),true,"Done Button displayed successfully." );
+        await driver.setImplicitWaitTimeout(2000);
+        const takeaSelfie = await driver.elementByAccessibilityId("startPictureBtn-testId");
+        await takeaSelfie.click();
+        console.log("Taped on take selfie button.");
+        await driver.setImplicitWaitTimeout(1000);
+
+        const capture = await driver.elementByAccessibilityId("captureSelfie-testId");
+        await capture.click();
+        console.log("Taped on Capture button.");
+
+        await driver.setImplicitWaitTimeout(10000);
+        const done = await driver.elementByAccessibilityId("doneBtn-testId");
+        assert.equal(await done.isDisplayed(),true,"Done Button displayed successfully." );
 
   });
   
     it('TC_Reg_78 : To Verify DONE button functionality from finished screen.', async function () {
-	await driver.setImplicitWaitTimeout(5000);
-	const done = await driver.elementByAccessibilityId("doneBtn-testId");
-	await done.click();	
-	console.log("Taped on Done button.");
-	await driver.setImplicitWaitTimeout(2000);
 
+        await driver.setImplicitWaitTimeout(5000);
+        const done = await driver.elementByAccessibilityId("doneBtn-testId");
+        await done.click();
+        console.log("Taped on Done button.");
+        await driver.setImplicitWaitTimeout(2000);
    });
 
     it('TC_Reg_78 : To Verify apply screen.', async function () {
 
+        await driver.setImplicitWaitTimeout(3000);
 		const apply = await  driver.elementByAccessibilityId("Apply, tab, 1 of 5");
 	    const dashboard = await  driver.elementByAccessibilityId("Dashboard, tab, 2 of 5");
 	    const cards = await  driver.elementByAccessibilityId("Cards, tab, 3 of 5");
@@ -393,8 +317,8 @@ describe(testName1, function () {
 
 	it('TC_Reg_79 : To Verify user profile screen after successfully registration.', async function () {
 
-		 const profile = await  driver.elementByAccessibilityId("Profile, tab, 4 of 5");
-		 await profile.click();
+	    const profile = await  driver.elementByAccessibilityId("Profile, tab, 4 of 5");
+	    await profile.click();
 		await driver.setImplicitWaitTimeout(2000);
 
 		const firstname = await driver.elementByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup[1]/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup[3]/android.widget.EditText");
@@ -413,11 +337,6 @@ describe(testName1, function () {
 		console.log("Actual Mobile : "+mobilNo);
 		let mob = '+44'+mobileNummber;
 
-		/*fn.equal(firstnamevar);
- 		ln.equal(lastnamevar);
- 		emailID.equal(emailvar);*/
-
-		//assert.equal(fn.equals(firstnamevar) &&  ln.equals(lastnamevar) &&  emailID.equals(emailvar) &&  mobilNo.equals('+44'+mobileNummber), true, "all elements displayed successfully on user profile screen.");
 		assert.equal(fn,firstnamevar,"First Name Matched successfully");
 		assert.equal(ln,lastnamevar,"Last Name Matched successfully");
 		assert.equal(emailID,emailvar,"Email Id Matched successfully");
@@ -434,53 +353,19 @@ describe(testName2, function () {
 	let allPassed = true;
 
 	afterEach(function () {
-		// keep track of whether all the tests have passed, since mocha does not do this
 		allPassed = allPassed && (this.currentTest.state === 'passed');
 	});
 
 	it('TC_Reg_01 : To Verify launch karma application successfully.', async function () {
-		try {
-
-
-		//	driver = await wd.promiseChainRemote(serverConfig)
-             /*   await driver.init({
-                    ...androidCaps,
-                    app: androidTestApp,
-                });*/
-
-			/*const browserStackCaps = {
-				'browserstack.user': bsUser,
-				'browserstack.key': bsKey,
-				'build': '[Android] Karma Register-' + time,
-				'name': 'TC_Auto_Reg_03 : To verify "Register" page and "Verification Code" screen validations scenarios.',
-				'app': bsAppPath,
-				'autoGrantPermissions': true,
-				'browserstack.debug': true,
-				'unicodeKeyboard': true,
-				'testobject_cache_device': true,
-				'deviceName': 'Google Nexus 6',
-				'os_version': '6.0',
-				'noReset': true
-			};*/
 
 			driver = wd.promiseRemote('http://hub-cloud.browserstack.com/wd/hub');
 			await driver.init(bsSetting(testName2));
 			await driver.setImplicitWaitTimeout(8000);
 
-
-			// Check that we're running the Karma app by checking package and activity
-			//const activity = await driver.getCurrentActivity();
-			//const pkg = await driver.getCurrentPackage();
-			//console.log(activity);
-
 			const registerBtn = await driver.elementByAccessibilityId("registerBtn-testId");
 			const btnLogin = await driver.elementByAccessibilityId("loginBtn-testId");
 
 			assert.equal(await registerBtn.isDisplayed() && await btnLogin.isDisplayed(), true, "Application launch successfully.");
-		} finally {
-			// Quit the session, no matter what happens
-			// await driver.quit();
-		}
 	});
 
 	it('TC_Reg_02 : To Verify "REGISTER" button functionality.', async function () {
@@ -545,7 +430,6 @@ describe(testName2, function () {
 		const registerBtn = await driver.elementByAccessibilityId("registerBtn-testId");
 
 		assert.equal(await registerBtn.isEnabled(),true,"Register button is disable");
-
 	});
 
 	it('TC_Reg_19 : To verify "Terms of service" link from "I agree to the Karma." checkbox.', async function () {
@@ -567,12 +451,11 @@ describe(testName2, function () {
 		await goBack.click();
 		const mobileNo = await driver.elementByAccessibilityId('phone-testId');
 		const pswd = await driver.elementByAccessibilityId("password-testId");
-		//const checkBox = await driver.elementByAccessibilityId("aggrementCheckbox-testId");
+
 		console.log("Tap on Go Back icon.");
 		await driver.setImplicitWaitTimeout(1000);
 
 		assert.equal(await mobileNo.isDisplayed()&& await pswd.isDisplayed(), true,"Successfully Redirected to Register page.");
-
 	});
 
 	it('TC_Reg_21 : To verify "Privacy Policy" link from "I agree to the Karma..." checkbox.', async function () {
@@ -600,7 +483,6 @@ describe(testName2, function () {
 		await driver.setImplicitWaitTimeout(1000);
 
 		assert.equal(await mobileNo.isDisplayed()&& await pswd.isDisplayed() && await checkBox.isDisplayed(), true,"Successfully Redirected to Register page.");
-
 	});
 
 	it('TC_Reg_27 : To verify validation message for less then 6 digit code.', async function () {
@@ -632,7 +514,6 @@ describe(testName2, function () {
 
 		console.log("Actual error message : "+actualotpErrorMsg);
         assert.equal(actualotpErrorMsg,expectedotpErrormsg,"Error Message displayed Successfully");
-
 	});
 
 	it('TC_Reg_31 : To verify validation message for invalid 6 digit code.', async function () {
@@ -656,7 +537,6 @@ describe(testName2, function () {
 
 		const otpErrorMsgOk = await driver.elementById("android:id/button1");
         await otpErrorMsgOk.click();
-
 	});
 
 	it('TC_Reg_25 : To verify back arrow button functionality on "Verification Code" screen.', async function () {
@@ -699,7 +579,6 @@ describe(testName2, function () {
 		await driver.setImplicitWaitTimeout(2000);
 		await driver.quit();
 	});
-
 });
 
 describe(testName3, function () {
@@ -707,52 +586,18 @@ describe(testName3, function () {
 	let allPassed = true;
 
 	afterEach(function () {
-		// keep track of whether all the tests have passed, since mocha does not do this
 		allPassed = allPassed && (this.currentTest.state === 'passed');
 	});
 	it('TC_Reg_01 : To Verify launch karma application successfully.', async function () {
-		try {
-			//driver = await wd.promiseChainRemote(serverConfig)
-		/*	await driver.init({
-				...androidCaps,
-				app: androidTestApp,
-			});
-*/
-			/*const browserStackCaps = {
-			  'browserstack.user' : bsUser,
-			  'browserstack.key' : bsKey,
-			  'build' : '[Android] Karma Register-'+time,
-			  'name': 'TC_Auto_Reg_04 : To verify "Personal Details" screen validation.',
-			  'app' : bsAppPath,
-			  'autoGrantPermissions' : true,
-			  'browserstack.debug' : true,
-			  'unicodeKeyboard': true,
-			  'testobject_cache_device': true,
-				'deviceName': 'Google Nexus 6',
-				'os_version': '6.0',
-				'noReset': true
-			};
-*/
+
 			driver = wd.promiseRemote('http://hub-cloud.browserstack.com/wd/hub');
 			await driver.init(bsSetting(testName3));
 			await driver.setImplicitWaitTimeout(8000);
 
-
-			// Check that we're running the Karma app by checking package and activity
-			//const activity = await driver.getCurrentActivity();
-			//const pkg = await driver.getCurrentPackage();
-			//console.log(activity);
-
 			const registerBtn = await driver.elementByAccessibilityId("registerBtn-testId");
 			const btnLogin = await driver.elementByAccessibilityId("loginBtn-testId");
 
-           // const register = appSelectors.registerBtn;
-			// const login = appSelectors.btnLogin;
 			assert.equal(await registerBtn.isDisplayed() && await btnLogin.isDisplayed(), true,"Application launch successfully.");
-		} finally {
-			// Quit the session, no matter what happens
-			// await driver.quit();
-		}
 	});
 
 	it('TC_Reg_02 : To Verify "REGISTER" button functionality', async function () {
@@ -812,17 +657,7 @@ describe(testName3, function () {
 
 		const personalDetails = await driver.elementByAccessibilityId("firstName-testId");
 		assert.equal(await personalDetails.isDisplayed(),true,"Successfully Personal Detail screen displayed.");
-
 	});
-
-/*	it('TC_Reg_34 : To verify back button functionality from personal details screen.', async function () {
-
-		const backButton =  await driver.elementByAccessibilityId("leftIconBtn-testId");
-		await backButton.click();
-		console.log("Clicked on Back button.");
-		await driver.setImplicitWaitTimeout(1000);
-
-	});*/
 
 	it('TC_Reg_36 : To verify validation message by entering only one alphabet in first name field.', async function () {
 
@@ -837,7 +672,6 @@ describe(testName3, function () {
 		  	console.log("Actual First Name Error Msg : "+actualFirstNameErrorMsg);
 
 			assert.equal(actualFirstNameErrorMsg,expectedFirstNameErrorMsg,"FirstName Error Msg Displayed Successfully.");
-
 	});
 
 	it('TC_Reg_35 : To verify validation message by entering number and special character in first name field.', async function () {
@@ -900,11 +734,11 @@ describe(testName3, function () {
 		  	console.log("Actual Last Name Error Msg : "+actualLastNameErrorMsg);
 
 			assert.equal(actualLastNameErrorMsg,expectedLastNameErrorMsg2,"LastName Error Msg Displayed Successfully.");
-
     });
 
 	it('TC_Reg_43 : To verify by removing the added text from Last Name text field.', async function () {
-			await driver.setImplicitWaitTimeout(2000);
+
+	        await driver.setImplicitWaitTimeout(2000);
 			const lastNameField =  await driver.elementByAccessibilityId("lastName-testId");
 			await lastNameField.clear();
 
@@ -918,12 +752,12 @@ describe(testName3, function () {
 		});
 
 	it('TC_Reg_51 : To verify validation message for invalid format Email Ids.', async function () {
-        let inValidEmailadd1 = "tarpan";
-	    let inValidEmailadd2 = "tarpan@gmail";
-	    let inValidEmailadd3 = "@gmail.com";
-	    let expectedEmailErrorMsg = 'Invalid email address';
 
-	        //  Invalid email address error message validation for - inValidEmailadd1
+            let inValidEmailadd1 = "tarpan";
+            let inValidEmailadd2 = "tarpan@gmail";
+            let inValidEmailadd3 = "@gmail.com";
+            let expectedEmailErrorMsg = 'Invalid email address';
+
 	        await driver.setImplicitWaitTimeout(2000);
 			const emailField = await driver.elementByAccessibilityId("emailId-testId");
 			await emailField.sendKeys(inValidEmailadd1);
@@ -939,7 +773,6 @@ describe(testName3, function () {
 
 			await emailField.clear();
 
-			//  Invalid email address error message validation for - inValidEmailadd2
             await driver.setImplicitWaitTimeout(1000);
 			await emailField.sendKeys(inValidEmailadd2);
             console.log("Entered Email ID : "+inValidEmailadd2);
@@ -953,8 +786,6 @@ describe(testName3, function () {
             console.log("Verified Error message for entering Invalid Email address.");
 
 			await emailField.clear();
-
-            //  Invalid email address error message validation for - inValidEmailadd3
 
             await driver.setImplicitWaitTimeout(1000);
             await emailField.sendKeys(inValidEmailadd3);
@@ -1027,51 +858,19 @@ describe(testName4, function () {
     let allPassed = true;
 
     afterEach(function () {
-        // keep track of whether all the tests have passed, since mocha does not do this
         allPassed = allPassed && (this.currentTest.state === 'passed');
     });
 
     it('TC_Reg_01 : To Verify launch karma application successfully.', async function () {
-		try {
-			//driver = await wd.promiseChainRemote(serverConfig)
-		/*	await driver.init({
-				...androidCaps,
-				app: androidTestApp,
-			});
-*/
-			/*const browserStackCaps = {
-			  'browserstack.user' : bsUser,
-			  'browserstack.key' : bsKey,
-			  'build' : '[Android] Karma Register-'+time,
-			  'name': 'TC_Auto_Reg_05 : To verify 'Address Details' screen validations.',
-			  'app' : bsAppPath,
-			  'autoGrantPermissions' : true,
-			  'browserstack.debug' : true,
-			  'unicodeKeyboard': true,
-			  'testobject_cache_device': true,
-				'deviceName': 'Google Nexus 6',
-				'os_version': '6.0',
-				'noReset': true
-			};
-*/
+
 			driver = wd.promiseRemote('http://hub-cloud.browserstack.com/wd/hub');
 			await driver.init(bsSetting(testName4));
 			await driver.setImplicitWaitTimeout(8000);
-
-
-			// Check that we're running the Karma app by checking package and activity
-			//const activity = await driver.getCurrentActivity();
-			//const pkg = await driver.getCurrentPackage();
-			//console.log(activity);
 
 			const registerBtn = await driver.elementByAccessibilityId("registerBtn-testId");
 			const btnLogin = await driver.elementByAccessibilityId("loginBtn-testId");
 
 			assert.equal(await registerBtn.isDisplayed() && await btnLogin.isDisplayed(), true,"Application launch successfully.");
-		} finally {
-			// Quit the session, no matter what happens
-
-		}
 	});
 
     it('TC_Reg_02 : To Verify "REGISTER" button functionality', async function () {
@@ -1131,7 +930,6 @@ describe(testName4, function () {
 
 		const personalDetails = await driver.elementByAccessibilityId("firstName-testId");
 		assert.equal(await personalDetails.isDisplayed(),true,"Successfully Personal Detail screen displayed.");
-
 	});
 
     it('TC_Reg_52 : To verify by entering valid format Email Id and other valid details.', async function () {
@@ -1158,10 +956,6 @@ describe(testName4, function () {
 	    await dobFieldOK.click();
 	    console.log("Clicked on DOB ok button.");
 
-	 /*   await driver.setImplicitWaitTimeout(1000);
-	    Dob = dobField.text();
-	    console.log("Entered DOB."+Dob);*/
-
 	    await driver.setImplicitWaitTimeout(1000);
 	    const emailField = await driver.elementByAccessibilityId("emailId-testId");
 	    await emailField.sendKeys(emailvar);
@@ -1182,8 +976,7 @@ describe(testName4, function () {
 
 	    assert.equal(await postalCode.isDisplayed() && await  addressDetailsText.isDisplayed() && await postalCodeNextButton.isDisplayed(),true,"Postal Code and Address details text is displayed successfully." );
         console.log("Verified Postal Code-Address screen successfully.");
-
-		});
+    });
 
     it('TC_Reg_55 : To verify Back button functionality from address details screen.', async function () {
 
@@ -1286,11 +1079,7 @@ describe(testName4, function () {
             console.log("Clicked on Search Icon.");
 			await driver.setImplicitWaitTimeout(8000);
 
-			//let expectedAddressListMsg ='NO ADDRESSES FOUND';
 			const actualAddressList = await driver.elementByXPath("//android.widget.TextView[@text='NO ADDRESSES FOUND']");
-			/*let actualAddressListMsg = actualAddressList.text();
-			console.log("Actual Address list Message : "+actualAddressListMsg);*/
-
 			assert.equal(await actualAddressList.isDisplayed(),true,"Address list message Displayed Successfully for invalid postal code.");
 		});
 
@@ -1416,52 +1205,20 @@ describe(testName5, function () {
     let allPassed = true;
 
      afterEach(function () {
-        // keep track of whether all the tests have passed, since mocha does not do this
         allPassed = allPassed && (this.currentTest.state === 'passed');
     });
 
 
 	it('TC_Reg_01 : To Verify launch karma application successfully.', async function () {
-		try {
-
-
-		/*	driver = await wd.promiseChainRemote(serverConfig);
-			await driver.init({
-				...androidCaps,
-				app: androidTestApp,
-			});*/
-		/*	const browserStackCaps = {
-			  'browserstack.user' : bsUser,
-			  'browserstack.key' : bsKey,
-			  'build' : '[Android] Karma Register-'+time,
-			  'name': 'TC_Auto_Reg_02 : Launch Karma APP & Make a successful Registration',
-			  'app' : bsAppPath,
-			  'autoGrantPermissions' : true,
-			  'browserstack.debug' : true,
-			  'unicodeKeyboard': true,
-			  'testobject_cache_device': true,
-				'deviceName': 'Google Nexus 6',
-				'os_version': '6.0',
-				'noReset': true
-			};*/
 
 			driver = wd.promiseRemote('http://hub-cloud.browserstack.com/wd/hub');
 			await driver.init(bsSetting(testName5));
 			await driver.setImplicitWaitTimeout(10000);
 
-
-			// Check that we're running the Karma app by checking package and activity
-			//const activity = await driver.getCurrentActivity();
-			//const pkg = await driver.getCurrentPackage();
-			//console.log(activity);
-
 			const registerBtn = await driver.elementByAccessibilityId("registerBtn-testId");
 			const btnLogin = await driver.elementByAccessibilityId("loginBtn-testId");
 			assert.equal(await registerBtn.isDisplayed() && await btnLogin.isDisplayed(), true,"Application launch successfully.");
-		} finally {
-			// Quit the session, no matter what happens
-			// await driver.quit();
-		}
+
 	});
 
 	it('TC_Reg_02 : To Verify "Register" button functionality', async function () {
@@ -1504,7 +1261,6 @@ describe(testName5, function () {
 
 		const otp = await driver.elementByAccessibilityId("otp-testId");
 		assert.equal(await otp.isDisplayed(),true,'Verification Code page displayed Successfully.');
-
 	});
 
 	it('TC_Reg_28, TC_Reg_29, TC_Reg_32 : To Verify by adding 6 digit code.', async function () {
@@ -1531,7 +1287,6 @@ describe(testName5, function () {
 		await driver.setImplicitWaitTimeout(5000);
 		const personalDetails = await driver.elementByAccessibilityId("firstName-testId");
 		assert.equal(await personalDetails.isDisplayed(),true,"Successfully Personal Detail screen displayed.");
-
 	});
 
 	it('TC_Reg_33, TC_Reg_54 : To Verify details on personal details screen.', async function () {
@@ -1568,7 +1323,7 @@ describe(testName5, function () {
         const nextButton = await driver.elementByAccessibilityId("nextBtn-testId");
         await nextButton.click();
         console.log("Clicked on Next button.");
-        await driver.setImplicitWaitTimeout(3000);
+        await driver.setImplicitWaitTimeout(4000);
 
         const postalCode = await driver.elementByAccessibilityId("postalCode-testId");
         const addressDetailsText = await driver.elementByXPath("//android.widget.TextView[@text='Step 2 of 4: The address details']");
@@ -1801,12 +1556,11 @@ describe(testName5, function () {
         await done.click();
         console.log("Taped on Done button.");
         await driver.setImplicitWaitTimeout(2000);
-
    });
 
     it('TC_Reg_78 : To Verify apply screen.', async function () {
 
-        await driver.setImplicitWaitTimeout(2000);
+        await driver.setImplicitWaitTimeout(3000);
 		const apply = await  driver.elementByAccessibilityId("Apply, tab, 1 of 5");
 	    const dashboard = await  driver.elementByAccessibilityId("Dashboard, tab, 2 of 5");
 	    const cards = await  driver.elementByAccessibilityId("Cards, tab, 3 of 5");
@@ -1823,6 +1577,7 @@ describe(testName5, function () {
 	    await driver.setImplicitWaitTimeout(2000);
 	    const profile = await  driver.elementByAccessibilityId("Profile, tab, 4 of 5");
 	    await profile.click();
+	    console.log("Taped on profile button.");
 		await driver.setImplicitWaitTimeout(2000);
 
 		const firstname = await driver.elementByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup[1]/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup[3]/android.widget.EditText");
